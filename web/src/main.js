@@ -5,7 +5,7 @@ import routes from './routes';
 import VueResource from 'vue-resource';
 
 import ElementUI from 'element-ui';
-import './static/element-variables.sass';
+import './static/element-variables.scss';
 
 Vue.use(ElementUI);  // ElementUI组件注册
 Vue.use(VueResource); //http请求注册

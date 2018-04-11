@@ -84,34 +84,43 @@ module.exports = {
             use: [{
                 loader: 'vue-loader',
                 options: {
-                    plugins:['syntax-dynamic-import'],
                     loaders: {
-                        css: ExtractTextPlugin.extract({
-                            use: ['css-loader'],
-                            fallback: 'vue-style-loader' // 加入路由后 不加此货CSS 无法生效
-                        }),
-                        sass: ExtractTextPlugin.extract({
-                            use: ["css-loader", "sass-loader"],
-                            fallback: 'vue-style-loader'
-                        }),
-                        less: ExtractTextPlugin.extract({
-                            use: ["css-loader", "less-loader"],
-                            fallback: 'vue-style-loader'
-                        })
-                    }
+                        css: 'style-loader!css-loader',
+                        scss: 'vue-style-loader!css-loader!sass-loader',
+                        sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+                    },
+                    plugins:['syntax-dynamic-import']
                 }
             }],
             exclude: /node_modules/,
             include: resolve('src')
         }, {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-            use: ['url-loader?limit=1024&name=files/[name].[hash:7].[ext]']
+            use:[{
+                loader: "url-loader",
+                options: {
+                    limit: 1024,
+                    name: '[name].[hash:7].[ext]',    // 将图片都放入img文件夹下，[hash:7]防缓存
+                    outputPath: 'image/',    // where the img will go
+                    publicPath: '../'   // override the default path
+                }
+            }]
         }, {
-            test: /\.(sass|css)$/,
-            use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: ['css-loader', 'sass-loader']
-            })
+            test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'fonts/',    // where the fonts will go
+                    publicPath: '../'   // override the default path
+                }
+            }]
+        }, {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract('css-loader')
+        },{
+            test: /\.scss/,
+            loader: ExtractTextPlugin.extract('css-loader!sass-loader')
         }]
     },
     devServer: {
