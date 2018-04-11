@@ -23,10 +23,16 @@ let plugins = [
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
     new webpack.optimize.ModuleConcatenationPlugin(), // 减少闭包函数数量,将一些有联系的模块，放到一个闭包函数
+    // 多页面应用设置
     new HtmlWebpackPlugin({
         filename: 'index.html',
         template: './index.html',
         chunks: ['vendor','app']  // 过滤Filtering chunks, 只包括某些模块
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'login.html',
+        template: './login.html',
+        chunks: ['vendor','test']  // 过滤Filtering chunks, 只包括某些模块
     })
 ];
 isPro && plugins.push( // 生产环境插件
@@ -42,7 +48,8 @@ isPro && plugins.push( // 生产环境插件
 module.exports = {
     devtool: isPro ? 'none' : 'cheap-module-source-map',
     entry: {
-        app: './src/main'
+        app: './src/main',
+        test: './src/login/login'
     },
     output: {
         filename: '[name].bundle.js',
