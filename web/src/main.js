@@ -4,6 +4,10 @@ import VueRouter from 'vue-router';
 import routes from './routes';
 import VueResource from 'vue-resource';
 
+import ElementUI from 'element-ui';
+import './static/element-variables.sass';
+
+Vue.use(ElementUI);  // ElementUI组件注册
 Vue.use(VueResource); //http请求注册
 Vue.use(VueRouter); //路由注册
 

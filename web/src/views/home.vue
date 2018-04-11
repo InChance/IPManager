@@ -1,5 +1,8 @@
 <template>
-    <div class="red">home--------------</div>
+    <div class="red">
+
+
+    </div>
 </template>
 
 <style rel="stylesheet/scss" lang="scss">
