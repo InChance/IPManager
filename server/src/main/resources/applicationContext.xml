@@ -11,5 +11,5 @@
         <context:exclude-filter type="regex" expression="com.leo.controller"/>
     </context:component-scan>
 
-    <import resource="classpath:mybatis-config.xml"/>
+    <!--<import resource="classpath:mybatis-config.xml"/>-->
 </beans>

@@ -12,7 +12,7 @@
     <context:annotation-config />
 
     <bean id="serverConfig" class="com.leo.core.ServerConfig">
-        <property name="port" value="8080"/>
+        <property name="port" value="80"/>
         <property name="charset" value="UTF-8"/>
         <property name="servletConfigLocation" value="classpath:dispatcher-servlet.xml"/>
     </bean>

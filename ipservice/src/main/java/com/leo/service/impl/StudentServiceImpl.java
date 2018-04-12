@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentServiceImpl implements IStudentService {
 
-    @Autowired
-    private StudentDao dao;
+//    @Autowired
+//    private StudentDao dao;
 
     @Override
     public String getStudent(int id){
-        return dao.get(id).toString();
+        return null;//dao.get(id).toString();
     }
 
 }
