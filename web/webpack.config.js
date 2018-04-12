@@ -21,18 +21,20 @@ let resolve = function (dir) {
 let plugins = [
     new CleanWebpackPlugin(['dist']), // 清理dist文件夹
     new ExtractTextPlugin('[name].css'),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }), // 抽出公共模块
     new webpack.optimize.ModuleConcatenationPlugin(), // 减少闭包函数数量,将一些有联系的模块，放到一个闭包函数
     // 多页面应用设置
     new HtmlWebpackPlugin({
+        title: '首页',
         filename: 'index.html',
         template: './index.html',
-        chunks: ['vendor','app']  // 过滤Filtering chunks, 只包括某些模块
+        chunks: ['vendor','app']  // chunks 默认会在生成的 html 文件中引用所有的 js 文件, 可以指定引入哪些特定的文件
     }),
     new HtmlWebpackPlugin({
+        title: '登陆',
         filename: 'login.html',
         template: './login.html',
-        chunks: ['vendor','test']  // 过滤Filtering chunks, 只包括某些模块
+        chunks: ['vendor','login']
     })
 ];
 isPro && plugins.push( // 生产环境插件
@@ -49,7 +51,7 @@ module.exports = {
     devtool: isPro ? 'none' : 'cheap-module-source-map',
     entry: {
         app: './src/main',
-        test: './src/login/login'
+        login: './src/login/login'
     },
     output: {
         filename: '[name].bundle.js',
@@ -127,19 +129,15 @@ module.exports = {
         contentBase: resolve('/'),
         historyApiFallback: true,
         compress: true,
-        port: 3055,
+        port: 8080,
         hot: true,
         inline: true,
-        stats: {
-            assets: true,
-            children: false,
-            modules: false,
-            chunks: false,
-            publicPath: false,
-            timings: true,
-            warnings: true,
-            colors: {
-                green: '\u001b[32m'
+        proxy: {
+            '/v1/*': {
+                target: 'http://localhost/',
+                secure: false,
+                changeOrigin: true,
+                pathRewrite: {'^/v1/': ''} // api路径重写(去掉这个属性，可用于图片等资源的转发)
             }
         }
     }

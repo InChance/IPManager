@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'Test',
+        name: 'login',
         data() {
             return {
                 msg : "测试多页面"
