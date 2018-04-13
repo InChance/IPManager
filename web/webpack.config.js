@@ -127,7 +127,7 @@ module.exports = {
         contentBase: resolve('/'),
         historyApiFallback: true,
         compress: true,
-        port: 8080,
+        port: 3077,
         hot: true,
         inline: true,
         proxy: {

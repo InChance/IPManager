@@ -10,15 +10,26 @@
                         </div>
                     </div>
                     <div class="left-list">
-                        <div class="left-list-li">
-                            123
-                        </div>
-                        <div class="left-list-li">
-                            123
-                        </div>
-                        <div class="left-list-li">
-                            123
-                        </div>
+                        <ul class="left-list-li">
+                            <li>
+                                <p>
+                                    <img src="image/qq.jpg">
+                                    <span>网段详情</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <img src="image/qq.jpg">
+                                    <span>IP地址查询</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <img src="image/qq.jpg">
+                                    <span>IP地址采集IP地址采集</span>
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </el-col>
@@ -87,20 +98,27 @@
         text-align: center;
         transform: translateY(-50%);
     }
-    .left-head img{
+    .left-head,.left-list img{
         padding-left:0;
         vertical-align:middle;
         display:inline-block;
         float: none;
-    };
-    .left-head span{
+    }
+    .left-head, .left-list span{
         padding-left: 0;
         float: none;
         display:inline-block;
         vertical-align:middle;
-    };
+    }
+    .left-list {
+        text-align: center;
+    }
     .left-list-li {
         margin: 5px 0 5px 0;
         color: #f9fafc;
+    }
+    .left-list-li p {
+        display: inline-block;
+        text-align: left;
     }
 </style>
