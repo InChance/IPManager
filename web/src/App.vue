@@ -10,8 +10,6 @@
 <style>
     body, html {
         font-size: 12px;
-        margin: 0;
-        padding: 0;
         height: 100%;
     }
     #main {

@@ -25,13 +25,11 @@ let plugins = [
     new webpack.optimize.ModuleConcatenationPlugin(), // 减少闭包函数数量,将一些有联系的模块，放到一个闭包函数
     // 多页面应用设置
     new HtmlWebpackPlugin({
-        title: '首页',
         filename: 'index.html',
         template: './index.html',
         chunks: ['vendor','app']  // chunks 默认会在生成的 html 文件中引用所有的 js 文件, 可以指定引入哪些特定的文件
     }),
     new HtmlWebpackPlugin({
-        title: '登陆',
         filename: 'login.html',
         template: './login.html',
         chunks: ['vendor','login']

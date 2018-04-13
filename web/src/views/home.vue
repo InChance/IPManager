@@ -5,24 +5,26 @@
                 <div class="grid-content bg-purple-dark">
                     <div class="left-head">
                         <div class="left-head-li">
-                            <img src="image/qq.jpg" class="col-xs-3">
-                            <span class="col-xs-7">IP地址管理系统</span>
+                            <img src="image/qq.jpg">
+                            <span>IP地址管理系统</span>
                         </div>
                     </div>
-                    <div class="left-list-li">
-                        123
-                    </div>
-                    <div class="left-list-li">
-                        123
-                    </div>
-                    <div class="left-list-li">
-                        123
+                    <div class="left-list">
+                        <div class="left-list-li">
+                            123
+                        </div>
+                        <div class="left-list-li">
+                            123
+                        </div>
+                        <div class="left-list-li">
+                            123
+                        </div>
                     </div>
                 </div>
             </el-col>
             <el-col :span="21">
                 <div class="grid-content">
-                    2
+                    222222
                 </div>
             </el-col>
         </el-row>
@@ -67,12 +69,7 @@
         background: #1e1f21;
     }
     .grid-content {
-        color: #f9fafc;
         height: 100%;
-    }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
     }
     .left-head {
         width: 100%;
@@ -80,6 +77,7 @@
         background-color: #313131;
         position: relative;
         font-size: 12px;
+        color: #f9fafc;
     }
     .left-head-li {
         width: 100%;
@@ -103,5 +101,6 @@
     };
     .left-list-li {
         margin: 5px 0 5px 0;
+        color: #f9fafc;
     }
 </style>

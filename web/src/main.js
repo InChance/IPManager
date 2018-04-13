@@ -6,7 +6,7 @@ import axios from 'axios';
 import ElementUI from 'element-ui';
 
 // 全局SCSS变量
-import './assets/element-variables.scss';
+import './assets/common.scss';
 
 Vue.use(ElementUI);  // ElementUI组件注册
 Vue.use(VueRouter); //路由注册
