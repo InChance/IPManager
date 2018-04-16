@@ -2,17 +2,3 @@
 $--color-primary: teal;
 $--font-path: "~element-ui/lib/theme-chalk/fonts";
 @import "~element-ui/lib/theme-chalk/index.css";
-
-/*强制换行*/
-* {
-  word-wrap: break-word;
-}
-
-html, body, h1, h2, h3, h4, h5, h6, hr, p,
-iframe, dl, dt, dd, ul, ol, li, pre, form, button,
-input, textarea, th, td {
-  margin: 0;
-  padding: 0;
-  list-style:none;
-}
-

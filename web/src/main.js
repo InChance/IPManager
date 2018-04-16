@@ -6,6 +6,8 @@ import axios from 'axios';
 import ElementUI from 'element-ui';
 
 // 全局SCSS变量
+import './assets/reset.css'
+import './assets/font-awesome.min.css'
 import './assets/common.scss';
 
 Vue.use(ElementUI);  // ElementUI组件注册

@@ -102,7 +102,7 @@ module.exports = {
                     limit: 1024,
                     name: '[name].[hash:7].[ext]',    // 将图片都放入img文件夹下，[hash:7]防缓存
                     outputPath: 'image/',    // where the img will go
-                    publicPath: '../'   // override the default path
+                    publicPath: './image/'   // override the default path
                 }
             }]
         }, {
@@ -112,7 +112,7 @@ module.exports = {
                 options: {
                     name: '[name].[ext]',
                     outputPath: 'fonts/',    // where the fonts will go
-                    publicPath: '../'   // override the default path
+                    publicPath: './fonts/'   // override the default path
                 }
             }]
         }, {
@@ -132,7 +132,7 @@ module.exports = {
         inline: true,
         proxy: {
             '/v1/*': {
-                target: 'http://localhost/',
+                target: 'http://127.0.0.1:8080/',
                 secure: false,
                 changeOrigin: true,
                 pathRewrite: {'^/v1/': ''} // api路径重写(去掉这个属性，可用于图片等资源的转发)
