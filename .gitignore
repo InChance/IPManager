@@ -1,6 +1,12 @@
-web/node_modules/
-.idea/*
+### Example user template
+
+# IntelliJ project files
+.idea
 *.iml
+out
+gen
+
+web/node_modules/
 web/dist/
 httpcore/target/
 ipservice/target/
