@@ -1,5 +1,8 @@
 web/node_modules/
-.idea/inspectionProfiles/profiles_settings.xml
-.idea/
+.idea/*
 *.iml
 web/dist/
+httpcore/target/
+ipservice/target/
+server/target/
+.idea/watcherTasks.xml
