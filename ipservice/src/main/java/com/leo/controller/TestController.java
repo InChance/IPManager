@@ -20,7 +20,7 @@ public class TestController {
     @ResponseBody
     public String handleFoo() {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", "leo");
+        map.put("name", "leo12");
         map.put("like", "xx");
         map.put("java", "good");
         return JSON.toJSONString(map);//service.getStudent(1);
