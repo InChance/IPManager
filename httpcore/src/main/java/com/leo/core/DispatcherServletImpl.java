@@ -13,6 +13,9 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletException;
 
+/**
+ * 创建时，实现ApplicationContextAware接口的会自动注入spring上下文
+ */
 public class DispatcherServletImpl extends DispatcherServlet implements ApplicationContextAware {
 
     private static Logger log = LoggerFactory.getLogger("com.leo.ServerStart");
