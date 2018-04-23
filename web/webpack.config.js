@@ -3,11 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-const fs = require('fs');
-
-const babelrc = JSON.parse(fs.readFileSync('./.babelrc'));
-require('babel-register')(babelrc);
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isPro = nodeEnv === "production";
@@ -37,7 +34,7 @@ let plugins = [
 ];
 isPro && plugins.push( // 生产环境插件
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-    new webpack.optimize.UglifyJsPlugin({compress:{ warnings: false}}),
+    new UglifyJsPlugin({ uglifyOptions:{compress:{warnings:false}}, sourceMap:true, parallel:true }),
 );
 !isPro && plugins.push( // 开发环境插件
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') }),
@@ -46,7 +43,7 @@ isPro && plugins.push( // 生产环境插件
 // =============插件配置（End）====================
 
 module.exports = {
-    devtool: isPro ? 'none' : 'cheap-module-source-map',
+    devtool: isPro ? 'none' : 'cheap-module-eval-source-map',
     entry: {
         app: './src/main',
         login: './src/login/login'
@@ -77,8 +74,7 @@ module.exports = {
                     plugins:['syntax-dynamic-import']
                 }
             }],
-            exclude: /node_modules/,
-            include: resolve('/')
+            include: resolve('src')
         },{
             test: /\.vue$/,
             use: [{
@@ -92,7 +88,6 @@ module.exports = {
                     plugins:['syntax-dynamic-import']
                 }
             }],
-            exclude: /node_modules/,
             include: resolve('src')
         }, {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

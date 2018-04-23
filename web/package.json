@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
-    "dev": "webpack --config webpack.config.js",
-    "build": "set NODE_ENV=production&&webpack -p --progress"
+    "dev": "webpack --progress --config webpack.config.js",
+    "build": "set NODE_ENV=production && webpack -p --progress"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +26,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
-    "element-ui": "^2.3.3",
+    "element-ui": "^2.3.6",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "element-ui": "^2.3.6",
     "vue": "^2.5.11",
-    "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1"
   }
 }
