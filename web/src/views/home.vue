@@ -36,7 +36,7 @@
             <el-col :span="21">
                 <div class="grid-content">
                     <div class="right-head">
-                           123
+                        123
                     </div>
                     <hr class="right-head-hr"/>
                 </div>

@@ -1,11 +1,30 @@
 <template>
     <div id="main">
-        <!--路由过渡切换-->
+        <!--<app-nav></app-nav>-->
         <transition name="fade" mode="out-in">
             <router-view class="view"></router-view>
         </transition>
     </div>
 </template>
+
+<script>
+    import Nav from './components/Nav.vue';
+    import Home from './views/home.vue';
+    export default {
+        data: () => {
+            return {
+
+            }
+        },
+        components: {
+            "app-nav": Nav,
+            "app-home": Home
+        },
+        methods: {
+
+        }
+    };
+</script>
 
 <style>
     body, html {
