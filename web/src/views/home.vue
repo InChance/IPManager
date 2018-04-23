@@ -36,7 +36,7 @@
             <el-col :span="21">
                 <div class="grid-content">
                     <div class="right-head">
-                            {{msg}}
+                           123
                     </div>
                     <hr class="right-head-hr"/>
                 </div>
@@ -49,14 +49,14 @@
     import ElRow from "element-ui/packages/row/src/row";
     import ElCol from "element-ui/packages/col/src/col";
     export default {
-        components: {
-            ElCol,
-            ElRow
-        },
         data() {
             return {
                 msg : 'null'
             }
+        },
+        components: {
+            ElCol,
+            ElRow
         },
         created: function () {
             this.getData();
