@@ -5,9 +5,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
+console.log('运行环境1：', process.env.NODE_ENV);
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isPro = nodeEnv === "production";
-console.log('当前运行环境：', nodeEnv);
+
+console.log("当前目录:", __dirname);
+console.log('运行环境2：', nodeEnv);
 
 let resolve = function (dir) {
     return path.join(__dirname, dir);
@@ -65,7 +68,7 @@ module.exports = {
                     plugins:['syntax-dynamic-import']
                 }
             }],
-            include: [resolve('src'), resolve('src'), resolve('/node_modules/element-ui/src'), resolve('/node_modules/element-ui/packages')]
+            include: [resolve('src'), resolve('src'), resolve('node_modules/element-ui/src'), resolve('node_modules/element-ui/packages')]
         },{
             test: /\.vue$/,
             use: [{
