@@ -5,12 +5,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-console.log('运行环境1：', process.env.NODE_ENV);
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isPro = nodeEnv === "production";
 
 console.log("当前目录:", __dirname);
-console.log('运行环境2：', nodeEnv);
+console.log('运行环境:', nodeEnv);
 
 let resolve = function (dir) {
     return path.join(__dirname, dir);
@@ -30,7 +29,7 @@ let plugins = [
 ];
 isPro && plugins.push( // 生产环境插件
         new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-        new UglifyJsPlugin({ uglifyOptions:{compress:{warnings:false}}, sourceMap:false }),
+        new UglifyJsPlugin({ uglifyOptions:{compress:{warnings:false}}, sourceMap:true }),
 );
 !isPro && plugins.push( // 开发环境插件
         new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') }),
@@ -91,7 +90,7 @@ module.exports = {
                     limit: 1024,
                     name: '[name].[hash:7].[ext]',    // 将图片都放入img文件夹下，[hash:7]防缓存
                     outputPath: 'image/',    // where the img will go
-                    publicPath: '../'   // override the default path
+                    publicPath: '/image/'   // override the default path
                 }
             }]
         },{
@@ -101,7 +100,7 @@ module.exports = {
                 options: {
                     name: '[name].[ext]',
                     outputPath: 'fonts/',    // where the fonts will go
-                    publicPath: '../'   // override the default path
+                    publicPath: '/fonts/'   // override the default path
                 }
             }]
         },{
