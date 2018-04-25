@@ -1,7 +1,7 @@
 <template>
     <div id="home">
-        <el-row>
-            <el-col :span="3">
+        <el-container>
+            <el-aside width="210px">
                 <div class="grid-content bg-purple-dark">
                     <div class="left-head">
                         <div class="left-head-li">
@@ -32,31 +32,29 @@
                         </ul>
                     </div>
                 </div>
-            </el-col>
-            <el-col :span="21">
+            </el-aside>
+            <el-main>
                 <div class="grid-content">
                     <div class="right-head">
-                        123
+                        <div class="list-switch-icon">
+                            <i class="fa fa-3x fa-outdent switch-icon"></i>
+                        </div>
                     </div>
                     <hr class="right-head-hr"/>
                 </div>
-            </el-col>
-        </el-row>
+            </el-main>
+        </el-container>
     </div>
 </template>
 
 <script>
-    import ElRow from "element-ui/packages/row/src/row";
-    import ElCol from "element-ui/packages/col/src/col";
     export default {
-        data() {
+        data: () => {
             return {
-                msg : 'null'
+                isCollapse: true
             }
         },
         components: {
-            ElCol,
-            ElRow
         },
         created: function () {
             this.getData();
@@ -64,28 +62,29 @@
         methods: {
             getData : function () {
                 let _this = this;
-                this.$http.get("/v1/hello").then( function (response) {
-                    _this.msg = response.data;
-                });
+//                this.$http.get("/v1/hello").then( function (response) {
+//                    _this.msg = response.data;
+//                });
             }
         }
     }
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
     #home {
         background-color: #f9fafc;
         height: 100%;
     }
-    .el-row {
+    .el-container {
         height: 100%;
-        &:last-child {
-            margin-bottom: 0;
-        }
     }
-    .el-col {
+    .el-aside {
         height: 100%;
-        border-radius: 4px;
+    }
+    .el-main {
+        margin: 0;
+        padding: 0;
+        height: 100%;
     }
     .bg-purple-dark {
         background: #1e1f21;
@@ -134,7 +133,7 @@
     }
     .left-list-li {
         padding: 8px 5px 8px 5px;
-        font-size: 15px;
+        font-size: 18px;
         color: #f9fafc;
     }
     .sliding-middle-out {
@@ -154,6 +153,26 @@
     .sliding-middle-out:hover:after {
         width: 100%;
         background: red;
+    }
+    .list-switch-icon {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 100%;
+        text-align: center;
+        float: none;
+        color: #313131;
+        border-right: 1px solid rgba(69, 79, 58, 0.24);
+    }
+    .list-switch-icon .switch-icon {
+        position: absolute;
+        cursor: pointer;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .list-switch-icon .switch-icon:hover {
+        color: #4d4d4d;
     }
     .right-head {
         width: 100%;
