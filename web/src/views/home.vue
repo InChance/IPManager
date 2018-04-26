@@ -37,7 +37,13 @@
                 <div class="grid-content">
                     <div class="right-head">
                         <div class="list-switch-icon">
-                            <i class="fa fa-3x fa-outdent switch-icon"></i>
+                            <i class="fa fa-2x fa-outdent switch-icon"></i>
+                        </div>
+                        <div class="help-word">
+                            <p>帮助文档</p>
+                        </div>
+                        <div class="account-info">
+                            <p>小明</p>
                         </div>
                     </div>
                     <hr class="right-head-hr"/>
@@ -104,7 +110,7 @@
         width: 100%;
         position: absolute;
         top: 50%;
-        font-size: 18px;
+        font-size: 14px;
         text-align: center;
         transform: translateY(-50%);
     }
@@ -133,7 +139,7 @@
     }
     .left-list-li {
         padding: 8px 5px 8px 5px;
-        font-size: 18px;
+        font-size: 14px;
         color: #f9fafc;
     }
     .sliding-middle-out {
@@ -174,7 +180,36 @@
     .list-switch-icon .switch-icon:hover {
         color: #4d4d4d;
     }
+    .help-word {
+        display: inline-block;
+        width: 100px;
+        height: 21px;
+        position: absolute;
+        top: 50%;
+        right: 100px;
+        font-size: 14px;
+        text-align: center;
+        background-color: #999999;
+    }
+    .help-word p {
+        transform: translateY(-50%);
+    }
+    .account-info {
+        display: inline-block;
+        width: 100px;
+        height: 21px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        font-size: 14px;
+        text-align: center;
+        background-color: #c0c0c0;
+    }
+    .account-info p {
+        transform: translateY(-50%);
+    }
     .right-head {
+        position: relative;
         width: 100%;
         height: 59px;
         font-size: 12px;
