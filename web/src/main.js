@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import ElementUI from 'element-ui'
+import ElementUI from 'element-ui';
 import axios from 'axios';
 import routes from './routes';
 import App from './App.vue';
 
-import './assets/reset.css'
-import './assets/font-awesome.min.css'
+import './assets/reset.css';
+import './assets/font-awesome.min.css';
 import './assets/common.scss';
 
 Vue.use(ElementUI);

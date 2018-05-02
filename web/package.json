@@ -1,7 +1,7 @@
 {
-  "name": "customer-client",
+  "name": "IPManager",
   "version": "1.0.0",
-  "description": "客服高频问题",
+  "description": "IP管理系统",
   "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config webpack.config.js",
@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "echarts": "^4.1.0",
     "element-ui": "^2.3.6",
     "font-awesome": "^4.7.0",
     "vue": "^2.5.16",

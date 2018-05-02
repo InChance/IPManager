@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <section>
         <img :src="imgs.logo"/>
         <el-button @click="show3 = !show3">Click Me</el-button>
         <div style="margin-top: 20px; height: 200px;">
@@ -10,7 +10,7 @@
                 </div>
             </el-collapse-transition>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
