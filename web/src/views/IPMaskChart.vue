@@ -21,7 +21,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     #ipMaskChart {
     }
     .chart-content {

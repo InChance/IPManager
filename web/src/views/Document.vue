@@ -25,7 +25,7 @@
     }
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
     .transition-box {
         margin-bottom: 10px;
         width: 200px;

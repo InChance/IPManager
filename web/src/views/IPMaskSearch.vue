@@ -8,7 +8,7 @@
 
 </script>
 
-<style>
+<style scoped>
     #ipMaskChart {
     }
 </style>

@@ -42,7 +42,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss" scoped>
     #home {
         height: 100%;
     }
