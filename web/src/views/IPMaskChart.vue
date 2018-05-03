@@ -1,5 +1,5 @@
 <template>
-    <section id="chart">
+    <section id="ipMaskChart">
         <div class="chart-content">
             <net-chart></net-chart>
             <el-button class="add-button" size="medium"><i class="fa fa-plus"></i></el-button>
@@ -22,7 +22,7 @@
 </script>
 
 <style>
-    #chart {
+    #ipMaskChart {
     }
     .chart-content {
         text-align: center;

@@ -10,20 +10,20 @@
             <ul class="left-list-ul">
                 <li class="left-list-li">
                     <p class="sliding-middle-out">
-                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                        <span>网段详情</span>
+                        <i class="fa fa-pie-chart link-color" aria-hidden="true"></i>
+                        <router-link to="/home"><span class="link-color">网段详情</span></router-link>
                     </p>
                 </li>
                 <li class="left-list-li">
                     <p class="sliding-middle-out">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        <span>IP地址查询</span>
+                        <i class="fa fa-search link-color" aria-hidden="true"></i>
+                        <router-link to="/home/search"><span class="link-color">IP地址查询</span></router-link>
                     </p>
                 </li>
                 <li class="left-list-li">
                     <p class="sliding-middle-out">
-                        <i class="fa fa-envira" aria-hidden="true"></i>
-                        <span>IP地址采集</span>
+                        <i class="fa fa-envira link-color" aria-hidden="true"></i>
+                        <router-link to="/home/collect"><span class="link-color">IP地址采集</span></router-link>
                     </p>
                 </li>
             </ul>
@@ -95,5 +95,8 @@
     .sliding-middle-out:hover:after {
         width: 100%;
         background: #d75c81;
+    }
+    .link-color {
+        color: #f9fafc;
     }
 </style>
