@@ -1,10 +1,10 @@
 <template>
     <el-container id="home">
         <el-aside>
-            <aside-content></aside-content>
+            <aside-content v-on:router-switch="getCurAddress"></aside-content>
         </el-aside>
         <el-main>
-            <head-content :curAddress="curAddress"></head-content>
+            <head-content v-bind:curAddress="curAddress"></head-content>
             <!--每页的局部页面跳转-->
             <transition name="fade" mode="out-in">
                 <router-view class="view"></router-view>
@@ -20,7 +20,7 @@
         data: () => {
             return {
                 isCollapse: true,
-                curAddress: '网段详情',
+                curAddress: '',
                 msg: "123456"
             }
         },
@@ -28,15 +28,9 @@
             'aside-content': Aside,
             'head-content': Head
         },
-        created: function () {
-            this.getData();
-        },
         methods: {
-            getData : function () {
-                let _this = this;
-//                this.$http.get("/v1/hello").then( function (response) {
-//                    _this.msg = response.data;
-//                });
+            getCurAddress: function (name) {
+                this.curAddress = name;
             }
         }
     }

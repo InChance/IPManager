@@ -11,25 +11,46 @@
                 <li class="left-list-li">
                     <p class="sliding-middle-out">
                         <i class="fa fa-pie-chart link-color" aria-hidden="true"></i>
-                        <router-link to="/home"><span class="link-color">网段详情</span></router-link>
+                        <router-link to="/home">
+                            <span v-on:click="routerSwitch('网段详情')" class="link-color">网段详情</span>
+                        </router-link>
                     </p>
                 </li>
                 <li class="left-list-li">
                     <p class="sliding-middle-out">
                         <i class="fa fa-search link-color" aria-hidden="true"></i>
-                        <router-link to="/home/search"><span class="link-color">IP地址查询</span></router-link>
+                        <router-link to="/home/search">
+                            <span v-on:click="routerSwitch('IP地址查询')" class="link-color">IP地址查询</span>
+                        </router-link>
                     </p>
                 </li>
                 <li class="left-list-li">
                     <p class="sliding-middle-out">
                         <i class="fa fa-envira link-color" aria-hidden="true"></i>
-                        <router-link to="/home/collect"><span class="link-color">IP地址采集</span></router-link>
+                        <router-link to="/home/collect">
+                            <span v-on:click="routerSwitch('IP地址采集')" class="link-color">IP地址采集</span>
+                        </router-link>
                     </p>
                 </li>
             </ul>
         </div>
     </section>
 </template>
+
+<script>
+    export default {
+        data: () => {
+            return {
+
+            }
+        },
+        methods: {
+            routerSwitch: function(name) {
+                this.$emit('router-switch', name)
+            }
+        }
+    }
+</script>
 
 <style scoped>
     #aside {
