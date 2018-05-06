@@ -8,29 +8,13 @@
         </div>
         <div class="left-list">
             <ul class="left-list-ul">
-                <li class="left-list-li">
-                    <p class="sliding-middle-out">
-                        <i class="fa fa-pie-chart link-color" aria-hidden="true"></i>
-                        <router-link to="/home">
-                            <span v-on:click="routerSwitch('网段详情')" class="link-color">网段详情</span>
-                        </router-link>
-                    </p>
-                </li>
-                <li class="left-list-li">
-                    <p class="sliding-middle-out">
-                        <i class="fa fa-search link-color" aria-hidden="true"></i>
-                        <router-link to="/home/search">
-                            <span v-on:click="routerSwitch('IP地址查询')" class="link-color">IP地址查询</span>
-                        </router-link>
-                    </p>
-                </li>
-                <li class="left-list-li">
-                    <p class="sliding-middle-out">
-                        <i class="fa fa-envira link-color" aria-hidden="true"></i>
-                        <router-link to="/home/collect">
-                            <span v-on:click="routerSwitch('IP地址采集')" class="link-color">IP地址采集</span>
-                        </router-link>
-                    </p>
+                <li v-for="(item, index) in menu" class="left-list-li">
+                    <router-link :to="router[index]">
+                        <p class="sliding-middle-out">
+                            <i :class="'fa ' + icons[index] + ' link-color'" aria-hidden="true"></i>
+                            <span @click="routerSwitch(item)" class="link-color">{{item}}</span>
+                        </p>
+                    </router-link>
                 </li>
             </ul>
         </div>
@@ -41,8 +25,13 @@
     export default {
         data: () => {
             return {
-
+                menu: ['网段详情', 'IP地址查询', 'IP地址采集'],
+                router: ['/home', '/home/search', '/home/collect'],
+                icons: ['fa-pie-chart', 'fa-search', 'fa-envira']
             }
+        },
+        mounted: function () {
+            this.$emit('router-switch', '网段详情')
         },
         methods: {
             routerSwitch: function(name) {

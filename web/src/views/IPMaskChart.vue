@@ -26,7 +26,7 @@
     }
     .chart-content {
         text-align: center;
-        padding: 20px 4%;
+        padding: 20px;
     }
     .add-button {
         display: inline-block;

@@ -1,7 +1,7 @@
 <template>
     <section id="netChart">
         <ul>
-            <li class="chart-item" v-for="i in 2">
+            <li class="chart-item el-card is-hover-shadow" v-for="i in 3">
                 <span class="ip-mask">173.85.0.0 / 24</span>
                 <span :id="'myChart_'+i" class="ip-chart"></span>
                 <span class="ip-used"><span class="ip-used-num">57</span> <br> 网段剩余可用IP数量 </span>
@@ -15,10 +15,7 @@
     export default {
         data: () => {
             return {
-                isMarginLeft: false,
-                chartItemMarginRight: 'chart-item-margin-right',
-                chartItemMarginLeft: 'chart-item-margin-left'
-//                msg: message
+
             }
         },
         mounted(){
@@ -26,7 +23,7 @@
         },
         methods: {
             drawLine(){
-                for(let k = 1; k <= 2; k++){
+                for(let k = 1; k <= 3; k++){
                     // 基于准备好的dom，初始化echarts实例
                     let myChart = echarts.init(document.getElementById('myChart_'+k));
                     // 绘制图表
@@ -100,12 +97,9 @@
         width: 100%;
     }
     .chart-item {
-        width: 100%;
         height: 300px;
-        margin-bottom: 25px;
-        border-radius: 5px;
+        margin-bottom: 20px;
         position: relative;
-        border: 1px solid rgba(68, 70, 69, 0.24);
     }
     .ip-mask {
         display: inline-block;

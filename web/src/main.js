@@ -1,3 +1,4 @@
+import 'babel-polyfill';    // 兼容IE浏览器
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';

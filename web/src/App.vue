@@ -1,10 +1,10 @@
 <template>
-    <div id="main">
+    <section id="main">
         <!--每页的页面跳转-->
         <transition name="fade" mode="out-in">
             <router-view class="view"></router-view>
         </transition>
-    </div>
+    </section>
 </template>
 
 <style>

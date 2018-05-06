@@ -1,10 +1,10 @@
 <template>
     <el-container id="home">
         <el-aside>
-            <aside-content v-on:router-switch="getCurAddress"></aside-content>
+            <aside-content @router-switch="getCurAddress"></aside-content>
         </el-aside>
         <el-main>
-            <head-content v-bind:curAddress="curAddress"></head-content>
+            <head-content :curAddress="curAddress"></head-content>
             <!--每页的局部页面跳转-->
             <transition name="fade" mode="out-in">
                 <router-view class="view"></router-view>
@@ -19,9 +19,7 @@
     export default {
         data: () => {
             return {
-                isCollapse: true,
                 curAddress: '',
-                msg: "123456"
             }
         },
         components: {
