@@ -1,7 +1,7 @@
 package dao;
 
-import com.leo.dao.StudentDao;
-import com.leo.model.Student;
+import com.leo.dao.IPMaskDao;
+import com.leo.model.IPMaskModel;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,10 +15,10 @@ public class Annotations_Example {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession session = sqlSessionFactory.openSession();
-        session.getConfiguration().addMapper(StudentDao.class);
+        session.getConfiguration().addMapper(IPMaskDao.class);
 
-        StudentDao dao = session.getMapper(StudentDao.class);
-        Student student = dao.get(1);
+        IPMaskDao dao = session.getMapper(IPMaskDao.class);
+        IPMaskModel student = dao.get(1);
         System.out.println(student.toString());
 
         session.commit();
