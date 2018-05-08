@@ -1,7 +1,18 @@
 package com.leo.model;
 
+import com.leo.utils.ResultCode;
+import lombok.Getter;
 /**
- * Created by Administrator on 2018/5/8.
+ * 协议返回的信息体
  */
-public class CommandResult {
+public abstract class CommandResult {
+    @Getter
+    private int status = ResultCode.SUCC;
+    @Getter
+    private Object body = null;
+
+    protected CommandResult( int status, Object body ){
+        this.status = status;
+        this.body   = body;
+    }
 }

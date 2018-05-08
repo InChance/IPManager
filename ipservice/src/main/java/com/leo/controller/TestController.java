@@ -16,8 +16,7 @@ public class TestController {
     @RequestMapping("/hello")
     @ResponseBody
     public Object handleFoo() {
-        IPMaskModel m = service.getIPMask(1);
-        System.err.println(m);
+        IPMaskModel m = service.getIPMask("1");
         return m;
     }
 
