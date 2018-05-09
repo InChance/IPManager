@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public class ResultCode extends CommandResult{
 
-    private static final int FAIL = 1; // 失败返回
-    private static final int SUCC = 0; // 成功返回
+    public static final int FAIL = 1; // 失败返回
+    public static final int SUCC = 0; // 成功返回
 
     public ResultCode(int status, Object body) {
         super(status, body);
