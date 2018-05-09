@@ -10,9 +10,9 @@ public class TestCase {
 
 	@Test
 	public void testMapper() {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext ac = new ClassPathXmlApplicationContext("spring-context.xml");
 		IPMaskDao dao = ac.getBean(IPMaskDao.class);
-		IPMaskModel u1 = dao.get(1);
+		IPMaskModel u1 = dao.getByIp("127.0.0.1");
 		System.out.println(u1.toString());
 	}
 }

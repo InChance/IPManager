@@ -14,13 +14,13 @@
     <bean id="serverConfig" class="com.leo.core.ServerConfig">
         <property name="port" value="8080"/>
         <property name="charset" value="UTF-8"/>
-        <property name="servletConfigLocation" value="classpath:dispatcher-servlet.xml"/>
+        <property name="servletConfigLocation" value="classpath:spring-mvc.xml"/>
     </bean>
 
     <bean id="dispatcherServlet" class="com.leo.core.DispatcherServletImpl" />
 
     <bean id="serverBoot" class="com.leo.core.ServerBoot" />
 
-    <import resource="classpath:applicationContext.xml"/>
+    <import resource="classpath:spring-context.xml"/>
 
 </beans>

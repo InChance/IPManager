@@ -12,4 +12,6 @@ public interface IIPMaskManager {
     void add(IPMaskModel model);
 
     void update(IPMaskModel model);
+
+    void remove(String ip);
 }

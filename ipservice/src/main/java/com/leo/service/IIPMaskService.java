@@ -13,8 +13,11 @@ public interface IIPMaskService {
 
     /**
      * 添加IP
-     * @param model
      * @return
      */
-    CommandResult addIPMask(IPMaskModel model);
+    CommandResult addIPMask(String ip, String name);
+
+    CommandResult updateIPMask(IPMaskModel model);
+
+    CommandResult deleteIPMask(String ip);
 }

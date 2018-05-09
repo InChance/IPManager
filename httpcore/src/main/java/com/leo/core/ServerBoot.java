@@ -31,9 +31,9 @@ public class ServerBoot {
     @Autowired
     private DispatcherServlet dispatcherServlet;
 
-    private NioEventLoopGroup bossGroup = null;
-    private NioEventLoopGroup workerGroup = null;
-    private ChannelFuture httpServerFuture;
+    private NioEventLoopGroup bossGroup    = null;
+    private NioEventLoopGroup workerGroup  = null;
+    private ChannelFuture httpServerFuture = null;
 
     private void run(){
         try {

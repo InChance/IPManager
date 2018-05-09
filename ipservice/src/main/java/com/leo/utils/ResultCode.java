@@ -19,7 +19,7 @@ public class ResultCode extends CommandResult{
 
     public static CommandResult succResult(Map<String, Object> map){
         if( map == null || map.isEmpty() ){
-            map = new LinkedHashMap<>();
+            map = new LinkedHashMap<String, Object>();
             map.put("state", "ok");
         }
         return new ResultCode(ResultCode.SUCC, map);

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IPMaskManagerImpl implements IIPMaskManager {
 
-    // （需要改善de缓存)：key: ip, value: IPMaskModel
+    // key: ip, value: IPMaskModel
     private Cache<String, IPMaskModel> ipMaskCache = CacheBuilder.newBuilder().softValues().build();
 
     @Autowired
@@ -43,6 +43,12 @@ public class IPMaskManagerImpl implements IIPMaskManager {
             dao.update(model);
             ipMaskCache.put(model.getIp(), model);
         }
+    }
+
+    @Override
+    public void remove(String ip){
+        dao.delete(ip);
+        ipMaskCache.invalidate(ip); // 释放缓存
     }
 
 }

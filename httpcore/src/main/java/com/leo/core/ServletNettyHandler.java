@@ -67,7 +67,7 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
         }
         byte[] responseContent = servletResponse.getContentAsByteArray();
         if (response.status().code() != 200) {
-            responseContent = (response.status().code() + " " + response.status().reasonPhrase()
+            responseContent = (response.status().code() + " --> " + response.status().reasonPhrase()
                     + "  error:" + servletResponse.getErrorMessage()).getBytes(charset);
         }
         ctx.write(response);

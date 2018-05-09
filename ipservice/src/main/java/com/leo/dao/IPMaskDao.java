@@ -1,10 +1,7 @@
 package com.leo.dao;
 
 import com.leo.model.IPMaskModel;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface IPMaskDao {
@@ -17,6 +14,9 @@ public interface IPMaskDao {
     @Insert("insert into " + TABLE + " ( " + FIELDS + " ) value ( #{ip}, #{name}, #{collectTime} )")
     void insert(IPMaskModel ipMask);
 
-    @Update("update " + TABLE + " set ip = #{ip}, name = #{name} where ip = #{ip}")
-    void update(IPMaskModel ipMask);
+    @Update("update " + TABLE + " set name = #{ipMask.name} where ip = #{ipMask.ip}")
+    void update(@Param("ipMask") IPMaskModel ipMask);
+
+    @Delete("delete from " + TABLE + " where ip = #{ip}")
+    void delete(String ip);
 }
