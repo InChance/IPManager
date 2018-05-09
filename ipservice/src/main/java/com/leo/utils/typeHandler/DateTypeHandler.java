@@ -1,4 +1,4 @@
-package com.leo.dao.typeHandler;
+package com.leo.utils.typeHandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
