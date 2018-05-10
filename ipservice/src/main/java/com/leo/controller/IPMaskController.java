@@ -1,6 +1,5 @@
 package com.leo.controller;
 
-import com.leo.model.CommandResult;
 import com.leo.model.IPMaskModel;
 import com.leo.service.IIPMaskService;
 import com.leo.utils.ResultCode;
@@ -23,22 +22,30 @@ public class IPMaskController {
     @Autowired
     private IIPMaskService ipMaskService;
 
+    /** 增加新的IP地址记录 */
     @RequestMapping( value = "/ip/collect", method = RequestMethod.POST )
     @ResponseBody
-    public CommandResult collecteIp(@RequestBody IPMaskModel model){
+    public ResultCode collecteIp(@RequestBody IPMaskModel model){
         return ipMaskService.addIPMask(model.getIp(), model.getName());
     }
 
+    /** 更新IP信息 */
     @RequestMapping( value = "/ip/update", method = RequestMethod.PUT )
     @ResponseBody
-    public CommandResult updateIP(@RequestBody IPMaskModel model){
+    public ResultCode updateIP(@RequestBody IPMaskModel model){
         return ipMaskService.updateIPMask(model);
     }
 
+    /** 删除IP记录 */
     @RequestMapping( value = "/ip/delete", method = RequestMethod.DELETE )
     @ResponseBody
-    public CommandResult deleteIP(@RequestBody Map<String, String> body){
+    public ResultCode deleteIP(@RequestBody Map<String, String> body){
         return ipMaskService.deleteIPMask(body.get("ip"));
     }
 
+    /** 计算网段信息 */
+    public ResultCode calculateIPMask(String ip, String mask){
+
+        return null;
+    }
 }

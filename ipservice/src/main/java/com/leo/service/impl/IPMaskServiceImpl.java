@@ -1,9 +1,9 @@
 package com.leo.service.impl;
 
 import com.leo.manager.IIPMaskManager;
-import com.leo.model.CommandResult;
 import com.leo.model.IPMaskModel;
 import com.leo.service.IIPMaskService;
+import com.leo.utils.IPMaskUtil;
 import com.leo.utils.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,21 +17,23 @@ public class IPMaskServiceImpl implements IIPMaskService {
 
     @Autowired
     private IIPMaskManager ipMaskManager;
+
+    // 安全重入锁
+    private static final Lock lock = new ReentrantLock();
+
     @Override
     public IPMaskModel getIPMask(String ip){
         return ipMaskManager.getByIP(ip);
     }
-    // 安全重入锁
-    private static final Lock lock = new ReentrantLock();
 
-    /**
-     * 添加IP地址入库
-     * @return
-     */
+    /** 添加IP地址入库 */
     @Override
-    public CommandResult addIPMask(String ip, String name) {
+    public ResultCode addIPMask(String ip, String name) {
         if (ip == null || "".equals(ip) || name == null || "".equals(name)) {
             return ResultCode.errorResult("填写的ip或计算机名为空！");
+        }
+        if(IPMaskUtil.isValidIP(ip)){
+            return ResultCode.errorResult("请输入合法IP");
         }
         lock.lock();
         try{
@@ -47,13 +49,9 @@ public class IPMaskServiceImpl implements IIPMaskService {
         }
     }
 
-    /**
-     * 更新IP地址
-     * @param model
-     * @return
-     */
+    /** 更新IP地址 */
     @Override
-    public CommandResult updateIPMask(IPMaskModel model){
+    public ResultCode updateIPMask(IPMaskModel model){
         String ip = model.getIp();
         String name = model.getName();
         if (ip == null || "".equals(ip) || name == null || "".equals(name)) {
@@ -67,13 +65,9 @@ public class IPMaskServiceImpl implements IIPMaskService {
         return ResultCode.succResult("更新成功");
     }
 
-    /**
-     * 删除IP地址
-     * @param ip
-     * @return
-     */
+    /** 删除IP地址 */
     @Override
-    public CommandResult deleteIPMask(String ip){
+    public ResultCode deleteIPMask(String ip){
         IPMaskModel m = ipMaskManager.getByIP(ip);
         if( m == null ){
             return ResultCode.errorResult("当前ip不存在！");
@@ -82,6 +76,16 @@ public class IPMaskServiceImpl implements IIPMaskService {
         return ResultCode.succResult("删除成功");
     }
 
+    @Override
+    public ResultCode calculateIPMask(String ip, String mask){
+        if( !IPMaskUtil.isValidIP(ip) ){
+            return ResultCode.errorResult("请输入合法IP");
+        }
+        if( !IPMaskUtil.isValidMask(mask) ){
+            return ResultCode.errorResult("请输入合法的掩码位");
+        }
 
+        return null;
+    }
 
 }

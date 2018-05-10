@@ -120,7 +120,7 @@ public class IPMaskUtil {
      * @param mask string
      * @return boolean
      */
-    public boolean isValidMask(String mask) {
+    public static boolean isValidMask(String mask) {
         int maskNum = 0;
         int maskBit = 0;
         //十进制掩码
