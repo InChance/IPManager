@@ -1,7 +1,7 @@
 package com.leo.service;
 
 import com.leo.model.IPMaskModel;
-import com.leo.utils.ResultCode;
+import com.leo.utils.CommandResult;
 
 public interface IIPMaskService {
     /**
@@ -15,12 +15,12 @@ public interface IIPMaskService {
      * 添加IP
      * @return
      */
-    ResultCode addIPMask(String ip, String name);
+    CommandResult addIPMask(String ip, String name);
 
-    ResultCode updateIPMask(IPMaskModel model);
+    CommandResult updateIPMask(IPMaskModel model);
 
-    ResultCode deleteIPMask(String ip);
+    CommandResult deleteIPMask(String ip);
 
     /** 通过IP、掩码位计算网段信息和可用IP */
-    ResultCode calculateIPMask(String ip, String mask);
+    CommandResult calculateIPMask(String ip, String mask);
 }
