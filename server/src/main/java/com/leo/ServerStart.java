@@ -12,7 +12,7 @@ public class ServerStart {
     private static Logger log = LoggerFactory.getLogger(ServerStart.class);
 
     public static void main(String[] args){
-        log.debug("begin to start up server......");
+        log.debug("begin to start up server.");
         new ClassPathXmlApplicationContext("server.xml");
     }
 

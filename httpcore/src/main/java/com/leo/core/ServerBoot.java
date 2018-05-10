@@ -57,7 +57,7 @@ public class ServerBoot {
                 }
             });
             httpServerFuture = boot.bind(new InetSocketAddress(serverConfig.getPort()));
-            log.debug("Server is listening on "+serverConfig.getPort()+"...");
+            log.debug("Server is listening on "+serverConfig.getPort()+"...\r\n");
         } catch (Exception e) {
             e.printStackTrace();
             bossGroup.shutdownGracefully();
@@ -68,7 +68,6 @@ public class ServerBoot {
     @PostConstruct
     public void start(){
         this.run();
-        log.debug("Class ServerBoot is created.");
         ServerBoot self = this;
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {

@@ -44,37 +44,42 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws Exception {
-        if (fullHttpRequest.decoderResult().isFailure()) {
-            sendError(ctx, HttpResponseStatus.BAD_REQUEST);
-            return;
-        }
-        // 模拟ServletRequest、ServletResponse对象
-        MockHttpServletRequest servletRequest = createHttpRequest(ctx, fullHttpRequest);
-        MockHttpServletResponse servletResponse = new MockHttpServletResponse();
         try {
+            if (fullHttpRequest.decoderResult().isFailure()) {
+                sendError(ctx, HttpResponseStatus.BAD_REQUEST);
+                return;
+            }
+
+            // 创建模拟的ServletRequest、ServletResponse对象
+            MockHttpServletRequest servletRequest = createHttpRequest(ctx, fullHttpRequest);
+            MockHttpServletResponse servletResponse = new MockHttpServletResponse();
+
             // 调用service执行业务逻辑
             this.servlet.service(servletRequest, servletResponse);
+
+            // 响应数据
+            HttpResponseStatus status = HttpResponseStatus.valueOf(servletResponse.getStatus());
+            HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
+            for (Object name : servletResponse.getHeaderNames()) {
+                for (Object value : servletResponse.getHeaders((String) name)) {
+                    response.headers().add((String) name, value);
+                }
+            }
+            byte[] responseContent = servletResponse.getContentAsByteArray();
+            if (response.status().code() != 200) {
+                responseContent = (response.status().code() + " " + response.status().reasonPhrase()
+                        + ", error: " + servletResponse.getErrorMessage()).getBytes(charset);
+            }
+            ctx.write(response);
+            InputStream inputStream = new ByteArrayInputStream(responseContent);
+            ChannelFuture channelFuture = ctx.writeAndFlush(new ChunkedStream(inputStream));
+            channelFuture.addListener(ChannelFutureListener.CLOSE);
+            log.debug("response content: " + new String(responseContent, charset));
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        HttpResponseStatus status = HttpResponseStatus.valueOf(servletResponse.getStatus());
-        HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
-        for (Object name : servletResponse.getHeaderNames()) {
-            for (Object value : servletResponse.getHeaders((String) name)) {
-                response.headers().add((String) name, value);
-            }
-        }
-        byte[] responseContent = servletResponse.getContentAsByteArray();
-        if (response.status().code() != 200) {
-            responseContent = (response.status().code() + " --> " + response.status().reasonPhrase()
-                    + "  error:" + servletResponse.getErrorMessage()).getBytes(charset);
-        }
-        ctx.write(response);
-        InputStream inputStream = new ByteArrayInputStream(responseContent);
-        ChannelFuture channelFuture = ctx.writeAndFlush(new ChunkedStream(inputStream));
-        channelFuture.addListener(ChannelFutureListener.CLOSE);
-        log.debug("response content: " + new String(responseContent, charset));
     }
 
     private MockHttpServletRequest createHttpRequest(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws UnsupportedEncodingException {
@@ -133,8 +138,8 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
 
         // 打印日志
         log.debug("request uri: " + uriComponents.getPath()
-                + " | method: " + fullHttpRequest.method().name()
-                + " | params: " + JSON.toJSONString(paramMap));
+                + " method: " + fullHttpRequest.method().name()
+                + " params: " + JSON.toJSONString(paramMap));
         String bodyParams = new String(data, charset);
         if( "application/json".equals( servletRequest.getHeader("Content-Type") ) ){
             log.debug("request body: \n" + bodyParams.trim());

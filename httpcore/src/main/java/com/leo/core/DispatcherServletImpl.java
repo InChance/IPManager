@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.mock.web.MockServletConfig;
-import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -31,19 +30,18 @@ public class DispatcherServletImpl extends DispatcherServlet implements Applicat
     @PostConstruct
     public void initialize(){
         try{
-            log.debug("模拟一个Servlet容器，加载spring mvc配置");
-            MockServletContext servletContext = new MockServletContext();
-            MockServletConfig servletConfig = new MockServletConfig(servletContext);
+            log.debug("创建Servlet容器，装载spring mvc配置");
             XmlWebApplicationContext wac = new XmlWebApplicationContext();
-            wac.setServletContext(servletContext);
+            // 创建Servlet配置信息
+            MockServletConfig servletConfig = new MockServletConfig();
             wac.setServletConfig(servletConfig);
             wac.setConfigLocation(config.getServletConfigLocation());
-            // 使用setParent来整合Application上下文, 否则spring mvc中无法注入applicationContext中的bean
+            // 使用setParent来整合Spring Application上下文, 否则spring mvc中无法注入Spring Context中的bean
             wac.setParent(appContext);
             wac.refresh();
-            // 设置DispatcherServlet的web上下文
+            // 设置Servlet容器上下文
             super.setApplicationContext(wac);
-            super.init(servletConfig);
+            super.init(wac.getServletConfig());
         }catch (ServletException e){
             e.printStackTrace();
             throw new RuntimeException(e);
