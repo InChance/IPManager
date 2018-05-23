@@ -15,4 +15,6 @@ public class IPDetailDto {
     private String lastUsable;  // 最后可用
     private int    usedCount;   // 已用数量
     private int    unusedCount; // 未用数量
+
+    public IPDetailDto(){}
 }

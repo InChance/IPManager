@@ -1,6 +1,7 @@
 package com.leo.service.impl;
 
 import com.leo.manager.IIPMaskManager;
+import com.leo.model.IPDetailDto;
 import com.leo.model.IPMaskModel;
 import com.leo.service.IIPMaskService;
 import com.leo.utils.IPMaskUtil;
@@ -82,6 +83,7 @@ public class IPMaskServiceImpl implements IIPMaskService {
         return CommandResult.succResult("删除成功");
     }
 
+    /** 计算网段详细信息 */
     @Override
     public CommandResult calculateIPMask(String ip, String mask){
         if( !IPMaskUtil.isValidIP(ip) ){
@@ -90,8 +92,9 @@ public class IPMaskServiceImpl implements IIPMaskService {
         if( !IPMaskUtil.isValidMask(mask) ){
             return CommandResult.errorResult("请输入合法的掩码位");
         }
-
-        return null;
+        // 计算网段详细信息
+        IPDetailDto ipDatail = IPMaskUtil.calculateIPMask(ip, mask);
+        return CommandResult.succResult(ipDatail);
     }
 
 }

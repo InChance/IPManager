@@ -1,5 +1,7 @@
 package com.leo.utils;
 
+import com.leo.model.IPDetailDto;
+
 public class IPMaskUtil {
 
     public String getIPMask(String ipAddr, String maskAddr) {
@@ -162,6 +164,45 @@ public class IPMaskUtil {
             return false;
         //剩下的就是合法掩码
         return true;
+    }
+
+    /** 通过IP和掩码计算网段详细信息 */
+    public static IPDetailDto calculateIPMask(String ipAddr, String ipMask){
+        // 计算十进制子网掩码
+        if(!ipMask.contains(".")){
+            ipMask = getMask(Byte.parseByte(ipMask));
+        }
+        String[] ipSplit   = ipAddr.split("\\.");
+        String[] maskSplit = ipMask.split("\\.");
+
+        IPDetailDto dto = new IPDetailDto();
+        for (int i = 0; i < 4; i++){
+            int ipTmp   = Integer.parseInt(ipSplit[i]);
+            int maskTmp = Integer.parseInt(maskSplit[i]);
+            // 地址类型
+            if( i == 0 ){
+                if( ipTmp == 127 ){
+                    dto.setIpType("回环地址");
+                } else if( ipTmp < 127 ){
+                    dto.setIpType("A类地址");
+                } else if( ipTmp < 192 ){
+                    dto.setIpType("B类地址");
+                } else if( ipTmp < 224 ){
+                    dto.setIpType("C类地址");
+                } else if( ipTmp < 240 ){
+                    dto.setIpType("D类地址（组播）");
+                } else if( ipTmp < 255 ){
+                    dto.setIpType("E类地址（保留）");
+                }
+            }
+            // 用户输入的IP的网路地址
+            String netIp = dto.getNetAddress() == null ? "" : dto.getNetAddress();
+            netIp = netIp.concat(Integer.toString(ipTmp & maskTmp)).concat(".");
+            dto.setNetAddress(netIp);
+
+
+        }
+        return null;
     }
 
 }
