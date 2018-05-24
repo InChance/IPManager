@@ -12,3 +12,4 @@ httpcore/target/
 ipservice/target/
 server/target/
 .idea/watcherTasks.xml
+web/package-lock.json
