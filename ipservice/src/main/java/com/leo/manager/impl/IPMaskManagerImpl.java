@@ -8,11 +8,13 @@ import com.leo.model.IPMaskModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 @Component
 public class IPMaskManagerImpl implements IIPMaskManager {
 
     // key: ip, value: IPMaskModel
-    private Cache<String, IPMaskModel> ipMaskCache = CacheBuilder.newBuilder().softValues().build();
+    private Cache<String, IPMaskModel> ipMaskCache = CacheBuilder.newBuilder().maximumSize(1000).expireAfterAccess(3, TimeUnit.DAYS).build();
 
     @Autowired
     private IPMaskDao dao;

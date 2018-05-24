@@ -57,6 +57,9 @@ public class IPMaskServiceImpl implements IIPMaskService {
         if (ip == null || "".equals(ip) || name == null || "".equals(name)) {
             return CommandResult.errorResult("填写的ip或计算机名为空！");
         }
+        if(IPMaskUtil.isValidIP(ip)){
+            return CommandResult.errorResult("请输入合法IP");
+        }
         IPMaskModel m = ipMaskManager.getByIP(ip);
         if( m == null ){
             return CommandResult.errorResult("当前ip不存在！");
@@ -68,6 +71,9 @@ public class IPMaskServiceImpl implements IIPMaskService {
     /** 删除IP地址 */
     @Override
     public CommandResult deleteIPMask(String ip){
+        if(IPMaskUtil.isValidIP(ip)){
+            return CommandResult.errorResult("请输入合法IP");
+        }
         IPMaskModel m = ipMaskManager.getByIP(ip);
         if( m == null ){
             return CommandResult.errorResult("当前ip不存在！");

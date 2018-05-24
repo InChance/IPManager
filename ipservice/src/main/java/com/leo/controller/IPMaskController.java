@@ -45,7 +45,6 @@ public class IPMaskController {
 
     /** 计算网段信息 */
     public CommandResult calculateIPMask(String ip, String mask){
-
-        return null;
+        return ipMaskService.calculateIPMask(ip, mask);
     }
 }
