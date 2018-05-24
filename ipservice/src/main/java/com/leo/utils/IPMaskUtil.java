@@ -1,6 +1,7 @@
 package com.leo.utils;
 
 import com.leo.model.IPDetailDto;
+import org.springframework.util.Assert;
 
 public class IPMaskUtil {
 
@@ -81,6 +82,16 @@ public class IPMaskUtil {
         return "";
     }
 
+    public static int getMaskbitByMaskAddress(String mask){
+        Assert.isTrue(mask != null && mask.contains("."), "子网掩码格式错误，mask=" + mask);
+        String binaryMask = "";
+        for (String str : mask.split("\\.")){
+            int maskTmp = Integer.parseInt(str);
+            binaryMask = binaryMask.concat(Integer.toBinaryString(maskTmp));
+        }
+        return getMaskbit(binaryMask);
+    }
+
     /**
      * 判断IP是否合法
      * @param ip string
@@ -143,7 +154,7 @@ public class IPMaskUtil {
         if(maskSplit.length != 4)
             return false;
         //将大于128的4个掩码段连成2进制字符串
-        for(int i=0; i<maskSplit.length; i++) {
+        for(int i=0; i < maskSplit.length; i++) {
             try {
                 maskNum = Integer.parseInt(maskSplit[i]);
             }catch(Exception e) {
@@ -166,6 +177,11 @@ public class IPMaskUtil {
         return true;
     }
 
+    // 识别掩码位数
+    public static int getMaskbit(String binaryMask) {
+        return binaryMask.lastIndexOf("1") + 1;
+    }
+
     /** 通过IP和掩码计算网段详细信息 */
     public static IPDetailDto calculateIPMask(String ipAddr, String ipMask){
         // 计算十进制子网掩码
@@ -176,6 +192,14 @@ public class IPMaskUtil {
         String[] maskSplit = ipMask.split("\\.");
 
         IPDetailDto dto = new IPDetailDto();
+        String netIp      = "";
+        String mask       = "";
+        String broadcast  = "";
+        String startIp    = "";
+        String endIp      = "";
+        String binaryMask = "";
+
+        // 循环计算网段信息
         for (int i = 0; i < 4; i++){
             int ipTmp   = Integer.parseInt(ipSplit[i]);
             int maskTmp = Integer.parseInt(maskSplit[i]);
@@ -195,14 +219,65 @@ public class IPMaskUtil {
                     dto.setIpType("E类地址（保留）");
                 }
             }
-            // 用户输入的IP的网路地址
-            String netIp = dto.getNetAddress() == null ? "" : dto.getNetAddress();
+            // 网络地址
             netIp = netIp.concat(Integer.toString(ipTmp & maskTmp)).concat(".");
-            dto.setNetAddress(netIp);
-
-
+            // 子网掩码
+            mask  = mask.concat(Integer.toString(maskTmp)).concat(".");
+            // 广播地址
+            broadcast = broadcast.concat(Integer.toString(~maskTmp + 256 | ipTmp )).concat(".");
+            // 可分配主机地址
+            if( i < 3 ) {
+                startIp = startIp.concat(Integer.toString(ipTmp & maskTmp)).concat(".");
+                endIp   = endIp.concat(Integer.toString(~maskTmp + 256 | ipTmp )).concat(".");
+            } else if( i == 3 ) {
+                if( maskTmp < 254 ) {
+                    startIp = startIp.concat(Integer.toString((ipTmp & maskTmp) + 1));
+                    endIp   = endIp.concat(Integer.toString((~maskTmp + 256 | ipTmp) - 1));
+                } else {
+                    startIp = "无";
+                    endIp   = "无";
+                }
+            }
+            binaryMask = binaryMask.concat(Integer.toBinaryString(maskTmp));
         }
-        return null;
+        dto.setNetAddress(netIp.substring(0,netIp.length() - 1));
+        dto.setMaskAddress(mask.substring(0,mask.length() - 1));
+        dto.setBroadcast(broadcast.substring(0,broadcast.length() - 1));
+        dto.setFirstUsable(startIp);
+        dto.setLastUsable(endIp);
+        dto.setUsableCount((int)Math.pow(2, 32 - getMaskbit(binaryMask)) - 2);
+        return dto;
+    }
+
+    /** 判断两个IP是否在同一个网段 */
+    public static boolean checkSameSegment(String mask, String ip1, String ip2){
+        int ipMask   = getIpV4Value(mask);
+        int ipValue1 = getIpV4Value(ip1);
+        int ipValue2 = getIpV4Value(ip2);
+        return (ipMask & ipValue1) == (ipMask & ipValue2);
+    }
+
+    public static int getIpV4Value(String ipOrMask)    {
+        byte[] addr = getIpV4Bytes(ipOrMask);
+        int address1  = addr[3] & 0xFF;
+        address1 |= ((addr[2] << 8) & 0xFF00);
+        address1 |= ((addr[1] << 16) & 0xFF0000);
+        address1 |= ((addr[0] << 24) & 0xFF000000);
+        return address1;
+    }
+
+    public static byte[] getIpV4Bytes(String ipOrMask) {
+        try{
+            String[] addrs = ipOrMask.split("\\.");
+            int length = addrs.length;
+            byte[] addr = new byte[length];
+            for (int index = 0; index < length; index++) {
+                addr[index] = (byte) (Integer.parseInt(addrs[index]) & 0xff);
+            }
+            return addr;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 
 }

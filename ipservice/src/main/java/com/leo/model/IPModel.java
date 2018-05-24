@@ -7,10 +7,10 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class IPMaskModel {
+public class IPModel {
     private String ip;
     private String name;
     private Date collectTime;
 
-    public IPMaskModel(){}
+    public IPModel(){}
 }

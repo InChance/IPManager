@@ -1,6 +1,7 @@
 package com.leo.service;
 
-import com.leo.model.IPMaskModel;
+import com.leo.model.IPModel;
+import com.leo.model.MaskModel;
 import com.leo.utils.CommandResult;
 
 public interface IIPMaskService {
@@ -9,7 +10,7 @@ public interface IIPMaskService {
      * @param ip
      * @return
      */
-    IPMaskModel getIPMask(String ip);
+    IPModel getIPMask(String ip);
 
     /**
      * 添加IP
@@ -17,10 +18,17 @@ public interface IIPMaskService {
      */
     CommandResult addIPMask(String ip, String name);
 
-    CommandResult updateIPMask(IPMaskModel model);
+    CommandResult updateIPMask(IPModel model);
 
     CommandResult deleteIPMask(String ip);
 
     /** 通过IP、掩码位计算网段信息和可用IP */
     CommandResult calculateIPMask(String ip, String mask);
+
+    CommandResult saveIPMask(MaskModel model);
+
+    /**获取网段的图标信息*/
+    CommandResult getIPMaskChartInfo();
+
+    CommandResult deleteMask(String mask);
 }

@@ -9,6 +9,7 @@ import lombok.Data;
 public class IPDetailDto {
     private String ipType;      // ip地址类型
     private String netAddress;  // 网段地址
+    private String maskAddress; // 子网掩码
     private String broadcast;   // 广播地址
     private int    usableCount; // 可用数量
     private String firstUsable; // 第一可用
