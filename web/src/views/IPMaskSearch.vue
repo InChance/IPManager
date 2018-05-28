@@ -12,7 +12,7 @@
                     <el-input size="large" class="input-style" v-model="inputObj.input4"></el-input>
                     <span class="line-style">/</span>
                     <el-input size="large" class="input-style" v-model="inputObj.input5"></el-input>
-                    <el-button @click="lazyLoadTableData" icon="el-icon-search" class="search-style"></el-button>
+                    <el-button @click="searchData" icon="el-icon-search" class="search-style"></el-button>
                     <div class="export-div-style">
                         <el-radio-group v-model="radio2">
                             <el-radio :label="1">未用</el-radio>
@@ -35,6 +35,9 @@
                 <p class="ip-info">最后可用：158.74.56.254</p>
                 <p class="ip-info">已用数量：523</p>
                 <p class="ip-info">未用数量：25684</p>
+            </div>
+            <div class="record-button">
+                <el-button>记录网段</el-button>
             </div>
         </el-card>
         <div class="ip-table" ref="ipTable">
@@ -83,18 +86,14 @@
                     this.tableData.push({id: i, ipAddr: '127.0.0.1', computer: 'liwenhao'+'_'+i, collectTime: new Date().toDateString()});
                 }
             },
-            handleChange: function () {
-                console.log(123455)
-            },
             handleEdit(index, row) {
                 console.log(index, row);
             },
             handleDelete(index, row) {
                 console.log(index, row);
             },
-            lazyLoadTableData: function () {
-                let self = this;
-                console.log(self.$refs.ipTable.style.height = '1024px');
+            searchData: function () {
+                console.log("searchData...");
             },
             cellMouseEnter: function (row) {
                 if(!this.isload && row.id > this.tableData.length-10) {
@@ -131,6 +130,13 @@
         border-top: 1px solid #ebeef5;
         min-height: 50px;
         padding: 10px 30% 0;
+    }
+    .record-button{
+        margin-top: 10px;
+        margin-left: 30%;
+    }
+    .record-button button{
+        width: 50%;
     }
     .ip-detail-close {
         display: none;

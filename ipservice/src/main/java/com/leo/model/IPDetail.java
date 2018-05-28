@@ -1,7 +1,7 @@
 package com.leo.model;
 
 import com.leo.manager.IIPManager;
-import com.leo.service.impl.BeanContextService;
+import com.leo.service.impl.ContextService;
 import com.leo.utils.IPMaskUtil;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class IPDetail {
     public IPDetail invoke() {
         // 计算网段详细信息
         ipDetailDto = IPMaskUtil.calculateIPMask(ip, mask);
-        IIPManager ipManager = BeanContextService.getBean(IIPManager.class);
+        IIPManager ipManager = ContextService.getBean(IIPManager.class);
         List<IPModel> list = ipManager.getAll();
         listDto = new ArrayList<IPModel>();
         // 过滤出数据库已拥有的IP

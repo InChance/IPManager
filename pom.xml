@@ -170,6 +170,12 @@
       <artifactId>guava</artifactId>
       <version>19.0</version>
     </dependency>
+    <!-- 处理Excel -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.14</version>
+    </dependency>
 
   </dependencies>
 
