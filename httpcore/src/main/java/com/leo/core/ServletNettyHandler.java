@@ -171,7 +171,7 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
             }
         }
 
-        // 处理表单参数，POST请求
+        // 处理表单参数，POST请求, 不支持上传文件
         if (req.method() == HttpMethod.POST) {
             HttpDataFactory factory = new DefaultHttpDataFactory(DefaultHttpDataFactory.MINSIZE); //Disk
             HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(factory, req);
