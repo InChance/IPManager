@@ -1,9 +1,5 @@
 <template>
     <section id="ipMaskCollect">
-        <div class="card-block">
-            <img class="card-img" src="../assets/img/excel.png"/>
-            <p>Excel导入</p>
-        </div>
         <div class="card-block" @click="dialogFormVisible = true">
             <img class="card-img" src="../assets/img/add.png"/>
             <p>手动导入</p>

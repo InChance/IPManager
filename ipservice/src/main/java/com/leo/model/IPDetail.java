@@ -42,4 +42,13 @@ public class IPDetail {
         ipDetailDto.setUnusedCount(ipDetailDto.getUsableCount() - ipDetailDto.getUsedCount());
         return this;
     }
+
+    public List<String> getNotUsedList(){
+        List<String> list = IPMaskUtil.parseIpRange(ipDetailDto.getFirstUsable(), ipDetailDto.getLastUsable());
+        for (IPModel m : listDto) {
+            list.remove(m.getIp());
+        }
+        return list;
+    }
+
 }

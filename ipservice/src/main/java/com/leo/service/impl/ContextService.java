@@ -2,17 +2,12 @@ package com.leo.service.impl;
 
 import com.leo.core.ServerConfig;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.ServletContext;
-import java.io.File;
 import java.net.URL;
 import java.util.Map;
 
@@ -26,6 +21,10 @@ public class ContextService implements ApplicationContextAware {
         ContextService.context = applicationContext;
     }
 
+    /**
+     * 获取项目根目录 : /xx/rootPath
+     * @return
+     */
     public static String getContextPath(){
         ServerConfig serverConfig = getBean(ServerConfig.class);
         String contextName = serverConfig.getContextName();
@@ -34,10 +33,16 @@ public class ContextService implements ApplicationContextAware {
         assert url != null : "配置文件：" + configFileName + " 获取不到。";
         String path = url.getPath();
         int i = path.lastIndexOf(contextName);
-        path = path.substring(1, i + 1 + contextName.length());
+        path = path.substring(1, i + contextName.length());
         return path;
     }
 
+    /**
+     * 获取Spring容器的bean
+     * @param c
+     * @param <T>
+     * @return
+     */
     public static <T> T getBean(Class<T> c){
         Map<String, T> map = context.getBeansOfType(c);
         Assert.isTrue(map != null && map.size() > 0, "ApplicationContext 未注册该类型bean[" + c.getSimpleName() + "]");

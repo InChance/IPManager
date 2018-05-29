@@ -68,7 +68,7 @@ public class ServerBoot {
     @PostConstruct
     public void start(){
         this.run();
-        ServerBoot self = this;
+        final ServerBoot self = this;
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 self.stop();

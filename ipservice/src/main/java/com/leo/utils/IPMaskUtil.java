@@ -3,6 +3,9 @@ package com.leo.utils;
 import com.leo.model.IPDetailDto;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IPMaskUtil {
 
     public String getIPMask(String ipAddr, String maskAddr) {
@@ -134,6 +137,9 @@ public class IPMaskUtil {
      * @return boolean
      */
     public static boolean isValidMask(String mask) {
+        if (mask == null || "".equals(mask)) {
+            return false;
+        }
         int maskNum = 0;
         int maskBit = 0;
         //十进制掩码
@@ -278,6 +284,34 @@ public class IPMaskUtil {
         } catch (Exception e) {
             throw new RuntimeException(e.getCause());
         }
+    }
+
+    /**
+     * 获取两个IP之间的所有IP地址
+     * @param ipfrom
+     * @param ipto
+     * @return
+     */
+    public static List<String> parseIpRange(String ipfrom, String ipto) {
+        List<String> ips = new ArrayList<String>();
+        String[] ipfromd = ipfrom.split("\\.");
+        String[] iptod = ipto.split("\\.");
+        int[] int_ipf = new int[4];
+        int[] int_ipt = new int[4];
+        for (int i = 0; i < 4; i++) {
+            int_ipf[i] = Integer.parseInt(ipfromd[i]);
+            int_ipt[i] = Integer.parseInt(iptod[i]);
+        }
+        for (int A = int_ipf[0]; A <= int_ipt[0]; A++) {
+            for (int B = (A == int_ipf[0] ? int_ipf[1] : 0); B <= (A == int_ipt[0] ? int_ipt[1] : 255); B++) {
+                for (int C = (B == int_ipf[1] ? int_ipf[2] : 0); C <= (B == int_ipt[1] ? int_ipt[2] : 255); C++) {
+                    for (int D = (C == int_ipf[2] ? int_ipf[3] : 1); D <= (C == int_ipt[2] ? int_ipt[3] : 254); D++) {
+                        ips.add(A + "." + B + "." + C + "." + D);
+                    }
+                }
+            }
+        }
+        return ips;
     }
 
 }

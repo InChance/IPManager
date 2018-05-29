@@ -7,18 +7,17 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
-import io.netty.handler.codec.http.multipart.DefaultHttpDataFactory;
-import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
-import io.netty.handler.codec.http.multipart.InterfaceHttpData;
-import io.netty.handler.codec.http.multipart.MemoryAttribute;
+import io.netty.handler.codec.http.multipart.*;
 import io.netty.handler.stream.ChunkedStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.Servlet;
 import java.io.ByteArrayInputStream;
@@ -55,7 +54,13 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
             MockHttpServletResponse servletResponse = new MockHttpServletResponse();
 
             // 调用service执行业务逻辑
-            this.servlet.service(servletRequest, servletResponse);
+            String contentType = servletRequest.getContentType();
+            if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+                MultipartHttpServletRequest multipartRequest = WebUtils.getNativeRequest(servletRequest, MultipartHttpServletRequest.class);
+                this.servlet.service(multipartRequest, servletResponse);
+            } else {
+                this.servlet.service(servletRequest, servletResponse);
+            }
 
             // 响应数据
             HttpResponseStatus status = HttpResponseStatus.valueOf(servletResponse.getStatus());
@@ -66,19 +71,21 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
                 }
             }
             byte[] responseContent = servletResponse.getContentAsByteArray();
-            if (response.status().code() != 200) {
-                responseContent = (response.status().code() + " " + response.status().reasonPhrase()
+            int code = response.status().code();
+            if (!(code >= 200 && code <= 299)) {
+                responseContent = (code + " " + response.status().reasonPhrase()
                         + ", error: " + servletResponse.getErrorMessage()).getBytes(charset);
             }
             ctx.write(response);
             InputStream inputStream = new ByteArrayInputStream(responseContent);
             ChannelFuture channelFuture = ctx.writeAndFlush(new ChunkedStream(inputStream));
             channelFuture.addListener(ChannelFutureListener.CLOSE);
-            log.debug("response content: " + new String(responseContent, charset));
+            if (code == 200) {
+                log.debug("response content: " + new String(responseContent, charset));
+            }
 
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            exceptionCaught(ctx, e.getCause());
         }
     }
 
@@ -166,8 +173,8 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
 
         // 处理表单参数，POST请求
         if (req.method() == HttpMethod.POST) {
-            DefaultHttpDataFactory httpDataFactory = new DefaultHttpDataFactory(false);
-            HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(httpDataFactory, req);
+            HttpDataFactory factory = new DefaultHttpDataFactory(DefaultHttpDataFactory.MINSIZE); //Disk
+            HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(factory, req);
             List<InterfaceHttpData> postData = decoder.getBodyHttpDatas();
             for(InterfaceHttpData data : postData){
                 if (data.getHttpDataType() == InterfaceHttpData.HttpDataType.Attribute) {
@@ -182,7 +189,7 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
-        if (ctx.channel().isActive()) {
+        if ( ctx.channel().isActive() ) {
             sendError(ctx, HttpResponseStatus.INTERNAL_SERVER_ERROR);
         }
     }
