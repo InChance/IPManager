@@ -21,11 +21,12 @@ public class IMaskManagerImpl implements IMaskManager {
     private MaskDao dao;
 
     @PostConstruct
-    public void init(){
+    public List<MaskModel> init(){
         List<MaskModel> list = dao.getAll();
         for (MaskModel m : list) {
             maskCache.put(m.getNetAddress(), m);
         }
+        return list;
     }
 
     @Override
@@ -52,6 +53,7 @@ public class IMaskManagerImpl implements IMaskManager {
     public List<MaskModel> getAll(){
         List<MaskModel> list = new ArrayList<MaskModel>();
         list.addAll(maskCache.asMap().values());
+        if(list.size() < 1) list = init();
         return list;
     }
 

@@ -12,6 +12,7 @@
 
 <script>
     import echarts from 'echarts';
+    import API     from '../remote/api';
     export default {
         data: () => {
             return {
@@ -23,6 +24,15 @@
         },
         methods: {
             drawLine(){
+
+
+                API.getCharList();
+                API.deleteChart({mask:'192.0.0.1'});
+                API.saveMask({netAddress: '192.125.37.252', maskAddress: '255.255.255.0'});
+                API.calculateIP({ip: '192.125.37.252', mask: '24'});
+
+
+
                 for(let k = 1; k <= 3; k++){
                     // 基于准备好的dom，初始化echarts实例
                     let myChart = echarts.init(document.getElementById('myChart_'+k));

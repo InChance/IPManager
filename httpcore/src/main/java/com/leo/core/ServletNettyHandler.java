@@ -21,6 +21,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.Servlet;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -85,11 +86,12 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
             }
 
         } catch (Exception e) {
-            exceptionCaught(ctx, e.getCause());
+            sendError(ctx, HttpResponseStatus.INTERNAL_SERVER_ERROR);
+//            exceptionCaught(ctx, e.getCause());
         }
     }
 
-    private MockHttpServletRequest createHttpRequest(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws UnsupportedEncodingException {
+    private MockHttpServletRequest createHttpRequest(ChannelHandlerContext ctx, FullHttpRequest fullHttpRequest) throws IOException {
         Map<String, String>  paramMap = getRequestParams(ctx, fullHttpRequest);
         // 模拟一个ServletRequest对象
         final MockHttpServletRequest servletRequest = new MockHttpServletRequest(servlet.getServletConfig().getServletContext());
@@ -158,7 +160,7 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
     /**
      * 获取post请求、get请求的参数保存到map中
      */
-    private Map<String, String> getRequestParams(ChannelHandlerContext ctx, HttpRequest req){
+    private Map<String, String> getRequestParams(ChannelHandlerContext ctx, FullHttpRequest req) throws IOException {
         Map<String, String> requestParams = new HashMap<String, String>();
 
         {// 处理uri参数，一般为GET请求
@@ -175,12 +177,11 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
         if (req.method() == HttpMethod.POST) {
             HttpDataFactory factory = new DefaultHttpDataFactory(DefaultHttpDataFactory.MINSIZE); //Disk
             HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(factory, req);
-            List<InterfaceHttpData> postData = decoder.getBodyHttpDatas();
-            for(InterfaceHttpData data : postData){
-                if (data.getHttpDataType() == InterfaceHttpData.HttpDataType.Attribute) {
-                    MemoryAttribute attribute = (MemoryAttribute) data;
-                    requestParams.put(attribute.getName(), attribute.getValue());
-                }
+            decoder.offer(req);
+            List<InterfaceHttpData> parmList = decoder.getBodyHttpDatas();
+            for (InterfaceHttpData parm : parmList) {
+                Attribute data = (Attribute) parm;
+                requestParams.put(data.getName(), data.getValue());
             }
         }
         return requestParams;

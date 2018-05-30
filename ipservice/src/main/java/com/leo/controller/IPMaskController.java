@@ -42,7 +42,7 @@ public class IPMaskController {
     }
 
     /** 计算网段信息 */
-    @RequestMapping( value = "/ip/calculate", method = RequestMethod.GET )
+    @RequestMapping( value = "/ip/calculate", method = RequestMethod.POST )
     @ResponseBody
     public CommandResult calculateIPMask(String ip, String mask){
         return ipMaskService.calculateIPMask(ip, mask);
@@ -55,7 +55,7 @@ public class IPMaskController {
         return ipMaskService.saveIPMask(model);
     }
 
-    /** 列出掩码图标信息 */
+    /** 列出掩码图表信息 */
     @RequestMapping( value = "/mask/chart", method = RequestMethod.GET )
     @ResponseBody
     public CommandResult getIPMaskChartInfo(){
