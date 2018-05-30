@@ -1,10 +1,10 @@
 <template>
     <section id="netChart">
         <ul>
-            <li class="chart-item el-card is-hover-shadow" v-for="i in 3">
-                <span class="ip-mask">173.85.0.0 / 24</span>
+            <li class="chart-item el-card is-hover-shadow" v-for="(ch, i) in chart_list">
+                <span class="ip-mask">{{chart_list[i].netIp}} / {{chart_list[i].mask}}</span>
                 <span :id="'myChart_'+i" class="ip-chart"></span>
-                <span class="ip-used"><span class="ip-used-num">57</span> <br> 网段剩余可用IP数量 </span>
+                <span class="ip-used"><span class="ip-used-num">{{chart_list[i].usedNum}}</span> <br> 网段剩余可用IP数量 </span>
             </li>
         </ul>
     </section>
@@ -13,10 +13,13 @@
 <script>
     import echarts from 'echarts';
     import API     from '../remote/api';
+
     export default {
         data: () => {
             return {
-
+                chart_list: [
+                    {}
+                ]
             }
         },
         mounted(){
@@ -24,14 +27,11 @@
         },
         methods: {
             drawLine(){
-
-
-                API.getCharList();
-                API.deleteChart({mask:'192.0.0.1'});
-                API.saveMask({netAddress: '192.125.37.252', maskAddress: '255.255.255.0'});
-                API.calculateIP({ip: '192.125.37.252', mask: '24'});
-
-
+                let self = this;
+                API.getIPMaskChartInfo().then(data => {
+                    console.log(data);
+                    self.chart_list = data.body;
+                });
 
                 for(let k = 1; k <= 3; k++){
                     // 基于准备好的dom，初始化echarts实例
