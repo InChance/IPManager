@@ -2,15 +2,15 @@
     <section id="ipMaskChart">
         <div class="chart-content">
             <net-chart></net-chart>
-            <el-button class="add-button" size="medium"><i class="fa fa-plus"></i></el-button>
+            <router-link to="/home/search">
+                <el-button class="add-button" size="medium"><i class="fa fa-plus"></i></el-button>
+            </router-link>
         </div>
-        <loader></loader>
     </section>
 </template>
 
 <script>
     import NetChart from "../components/NetChart";
-    import Loader   from "../components/loader"
     export default {
         data: () => {
             return {
@@ -19,7 +19,6 @@
         },
         components: {
             'net-chart': NetChart,
-            'loader': Loader
         }
     }
 </script>

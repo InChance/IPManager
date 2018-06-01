@@ -292,7 +292,7 @@ public class IPMaskUtil {
      * @param ipto
      * @return
      */
-    public static List<String> parseIpRange(String ipfrom, String ipto) {
+    public static List<String> parseIpRange(String ipfrom, String ipto, int limit) {
         List<String> ips = new ArrayList<String>();
         String[] ipfromd = ipfrom.split("\\.");
         String[] iptod = ipto.split("\\.");
@@ -307,6 +307,9 @@ public class IPMaskUtil {
                 for (int C = (B == int_ipf[1] ? int_ipf[2] : 0); C <= (B == int_ipt[1] ? int_ipt[2] : 255); C++) {
                     for (int D = (C == int_ipf[2] ? int_ipf[3] : 1); D <= (C == int_ipt[2] ? int_ipt[3] : 254); D++) {
                         ips.add(A + "." + B + "." + C + "." + D);
+                        if( ips.size() >= limit ){
+                            return ips;
+                        }
                     }
                 }
             }

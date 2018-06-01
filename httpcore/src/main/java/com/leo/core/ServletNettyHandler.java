@@ -23,12 +23,8 @@ import javax.servlet.Servlet;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
@@ -77,17 +73,9 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
                 responseContent = (code + " " + response.status().reasonPhrase()
                         + ", error: " + servletResponse.getErrorMessage()).getBytes(charset);
             }
-            ctx.write(response);
-            InputStream inputStream = new ByteArrayInputStream(responseContent);
-            ChannelFuture channelFuture = ctx.writeAndFlush(new ChunkedStream(inputStream));
-            channelFuture.addListener(ChannelFutureListener.CLOSE);
-            if (code == 200) {
-                log.debug("response content: " + new String(responseContent, charset));
-            }
-
+            writeAndFlush(ctx, response, responseContent);
         } catch (Exception e) {
-            sendError(ctx, HttpResponseStatus.INTERNAL_SERVER_ERROR);
-//            exceptionCaught(ctx, e.getCause());
+            exceptionCaught(ctx, e.getCause());
         }
     }
 
@@ -200,10 +188,20 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
      * @param ctx
      * @param status
      */
-    private static void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
-        HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR);
+    private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
+        HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
         response.headers().add(io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE, "text/plain; charset=UTF-8");
-        ctx.write(response).addListener(ChannelFutureListener.CLOSE);
+        int code = response.status().code();
+        byte[] responseContent = (code + " " + response.status().reasonPhrase()).getBytes();
+        writeAndFlush(ctx, response, responseContent);
+    }
+
+    private void writeAndFlush(ChannelHandlerContext ctx, HttpResponse response, byte[] content){
+        ctx.write(response);
+        InputStream inputStream = new ByteArrayInputStream(content);
+        ChannelFuture channelFuture = ctx.writeAndFlush(new ChunkedStream(inputStream));
+        channelFuture.addListener(ChannelFutureListener.CLOSE);
+        log.debug("response content: " + Arrays.toString(content));
     }
 
 }

@@ -10,18 +10,22 @@ export default [
         redirect: 'home'
     },
     {
+        name: 'home',
         path: '/home',
         component: HomeVue,
         children: [
             {
+                name: 'chart',
                 path: '',
                 component: IPMaskChart
             },
             {
+                name: 'search',
                 path: 'search',
                 component: IPMaskSearch
             },
             {
+                name: 'collect',
                 path: 'collect',
                 component: IPMaskCollect
             }

@@ -3,6 +3,8 @@ package com.leo.model;
 import com.leo.manager.IIPManager;
 import com.leo.service.impl.ContextService;
 import com.leo.utils.IPMaskUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ public class IPDetail {
     private String mask;
     private IPDetailDto ipDetailDto;
     private List<IPModel> listDto;
+    @Getter @Setter
+    private int isRecord;
 
     public IPDetail(String ip, String mask) {
         this.ip = ip;
@@ -43,8 +47,8 @@ public class IPDetail {
         return this;
     }
 
-    public List<String> getNotUsedList(){
-        List<String> list = IPMaskUtil.parseIpRange(ipDetailDto.getFirstUsable(), ipDetailDto.getLastUsable());
+    public List<String> notUsedList(int limit){
+        List<String> list = IPMaskUtil.parseIpRange(ipDetailDto.getFirstUsable(), ipDetailDto.getLastUsable(), limit);
         for (IPModel m : listDto) {
             list.remove(m.getIp());
         }

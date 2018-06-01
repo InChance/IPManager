@@ -1,5 +1,6 @@
 <template>
     <el-container id="home">
+        <loader></loader>
         <el-aside>
             <aside-content @router-switch="getCurAddress"></aside-content>
         </el-aside>
@@ -16,6 +17,7 @@
 <script>
     import Aside    from "../components/layout/Aside";
     import Head     from "../components/layout/Head";
+    import Loader   from "../components/loader"
     export default {
         data: () => {
             return {
@@ -24,7 +26,8 @@
         },
         components: {
             'aside-content': Aside,
-            'head-content': Head
+            'head-content': Head,
+            'loader': Loader
         },
         methods: {
             getCurAddress: function (name) {

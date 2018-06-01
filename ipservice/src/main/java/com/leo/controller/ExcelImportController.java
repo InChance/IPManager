@@ -58,7 +58,8 @@ public class ExcelImportController {
             return CommandResult.errorResult("请输入合法的掩码位");
         }
         IPDetail ipDetail = new IPDetail(ip, mask).invoke();
-        List<?> list = type == 0 ? ipDetail.getNotUsedList() : ipDetail.getListDto();
+        int limit = 150000;
+        List<?> list = type == 0 ? ipDetail.notUsedList(limit) : ipDetail.getListDto();
         HSSFWorkbook hwb = ExcelModel.getByList(list);
         HttpHeaders headers = new HttpHeaders();
         //下载显示的文件名，解决中文名称乱码问题

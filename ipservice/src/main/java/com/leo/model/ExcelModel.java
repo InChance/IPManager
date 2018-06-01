@@ -78,33 +78,40 @@ public class ExcelModel {
      * @return
      */
     public static <T> HSSFWorkbook getByList(List<T> list) throws IllegalAccessException {
-        // 创建Excel文档
-        HSSFWorkbook hwb = new HSSFWorkbook();
-        HSSFSheet sheet = hwb.createSheet();
-        for (int i = 0; i < list.size(); i++){
-            T t = list.get(i);
-            HSSFRow row = sheet.createRow(i);
-            Class cls = t.getClass();
-            Field[] fields = cls.getDeclaredFields();
-            for(int j = 0; j < fields.length; j++){
-                HSSFCell xh = row.createCell(j);
-                if( t.getClass() == String.class ){
-                    xh.setCellValue(t.toString());
-                    break;
-                }
-                Field f = fields[j];
-                f.setAccessible(true);
-                if ( f.getType() == Date.class) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Object obj = f.get(t);
-                    xh.setCellValue(obj != null ? sdf.format(obj) : "");
-                } else {
-                    Object obj = f.get(t);
-                    xh.setCellValue(obj != null ? String.valueOf(f.get(t)) : "");
+        try {
+            // 创建Excel文档
+            HSSFWorkbook hwb = new HSSFWorkbook();
+            for(int k = 0; k < list.size(); k=k+50000 ){
+                HSSFSheet sheet = hwb.createSheet();
+                for (int i = k, j = 0; i < list.size() && i < k+50000; i++, j++){
+                    T t = list.get(i);
+                    HSSFRow row = sheet.createRow(j);
+                    Class cls = t.getClass();
+                    Field[] fields = cls.getDeclaredFields();
+                    for(int h = 0; h < fields.length; h++){
+                        HSSFCell xh = row.createCell(h);
+                        if( t.getClass() == String.class ){
+                            xh.setCellValue(t.toString());
+                            break;
+                        }
+                        Field f = fields[j];
+                        f.setAccessible(true);
+                        if ( f.getType() == Date.class) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Object obj = f.get(t);
+                            xh.setCellValue(obj != null ? sdf.format(obj) : "");
+                        } else {
+                            Object obj = f.get(t);
+                            xh.setCellValue(obj != null ? String.valueOf(f.get(t)) : "");
+                        }
+                    }
                 }
             }
+            return hwb;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
-        return hwb;
     }
 
     /**

@@ -1,10 +1,12 @@
 <template>
     <section id="netChart">
         <ul>
-            <li class="chart-item el-card is-hover-shadow" v-for="(ch, i) in chart_list">
-                <span class="ip-mask">{{chart_list[i].netIp}} / {{chart_list[i].mask}}</span>
-                <span :id="'myChart_'+i" class="ip-chart"></span>
-                <span class="ip-used"><span class="ip-used-num">{{chart_list[i].usedNum}}</span> <br> 网段剩余可用IP数量 </span>
+            <li class="chart-item el-card is-hover-shadow" v-for="(ch, index) in chart_list">
+                <span class="ip-mask">{{ch.netIp}} / {{ch.mask}}</span>
+                <router-link :to="{name:'search', params:{ip: ch.netIp, mask: ch.mask}}">
+                    <span :id="'chart'+(index+1)" class="ip-chart"></span>
+                </router-link>
+                <span class="ip-used"><span class="ip-used-num">{{ch.unusedNum}}</span> <br> 网段剩余可用IP数量 </span>
             </li>
         </ul>
     </section>
@@ -13,91 +15,41 @@
 <script>
     import echarts from 'echarts';
     import API     from '../remote/api';
+    import ChartOption  from '../utils/ChartOption';
 
     export default {
-        data: () => {
+        data() {
             return {
-                chart_list: [
-                    {}
-                ]
+                chart_list: []
             }
         },
         mounted(){
-            this.drawLine();
+            this.reloadChartData();
+        },
+        updated(){ // 重新渲染都会调用
+            this.drawPhoto(this.chart_list);
         },
         methods: {
-            drawLine(){
+            reloadChartData(){
                 let self = this;
                 API.getIPMaskChartInfo().then(data => {
+                    console.log("图表请求数据：");
                     console.log(data);
                     self.chart_list = data.body;
+                }).catch(ex=>{
+                    self.chart_list = [];
+                    self.$notify.error({title:'错误', message:ex.message});
                 });
-
-                for(let k = 1; k <= 3; k++){
+            },
+            drawPhoto(chart_list){
+                for(let k = 0; k < chart_list.length; k++){
                     // 基于准备好的dom，初始化echarts实例
-                    let myChart = echarts.init(document.getElementById('myChart_'+k));
+                    let myChart = echarts.init( document.getElementById('chart'+(k+1)) );
                     // 绘制图表
-                    let option = {
-                        tooltip : {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c} ({d}%)"
-                        },
-
-                        visualMap: {
-                            show: false,
-                            min: 80,
-                            max: 600,
-                            inRange: {
-                                colorLightness: [0, 1]
-                            }
-                        },
-                        series : [
-                            {
-                                name:'访问来源',
-                                type:'pie',
-                                radius : '55%',
-                                center: ['50%', '50%'],
-                                data:[
-                                    {value:335, name:'直接访问'},
-                                    {value:310, name:'邮件营销'},
-                                    {value:274, name:'联盟广告'},
-                                    {value:235, name:'视频广告'},
-                                    {value:400, name:'搜索引擎'}
-                                ].sort(function (a, b) { return a.value - b.value; }),
-                                roseType: 'radius',
-                                label: {
-                                    normal: {
-                                        textStyle: {
-                                            color: 'rgba(0, 0, 0, 0.3)'
-                                        }
-                                    }
-                                },
-                                labelLine: {
-                                    normal: {
-                                        lineStyle: {
-                                            color: 'rgba(0, 0, 0, 0.3)'
-                                        },
-                                        smooth: 0.2,
-                                        length: 10,
-                                        length2: 20
-                                    }
-                                },
-                                itemStyle: {
-                                    normal: {
-                                        color: '#d75c81',
-                                        shadowBlur: 200,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                    }
-                                },
-
-                                animationType: 'scale',
-                                animationEasing: 'elasticOut'
-                            }
-                        ]
-                    };
+                    let option = ChartOption.getOption(chart_list[k]);
                     myChart.setOption(option);
                 }
-            }
+            },
         }
     }
 </script>

@@ -3,48 +3,47 @@
         <el-card shadow="hover">
             <div class="ip-input-main">
                 <div class="ip-input">
-                    <el-input size="large" class="input-style" v-model="inputObj.input1"></el-input>
+                    <el-input size="large" class="input-style" v-model="ipNums[0]"></el-input>
                     <span class="point-style">.</span>
-                    <el-input size="large" class="input-style" v-model="inputObj.input2"></el-input>
+                    <el-input size="large" class="input-style" v-model="ipNums[1]"></el-input>
                     <span class="point-style">.</span>
-                    <el-input size="large" class="input-style" v-model="inputObj.input3"></el-input>
+                    <el-input size="large" class="input-style" v-model="ipNums[2]"></el-input>
                     <span class="point-style">.</span>
-                    <el-input size="large" class="input-style" v-model="inputObj.input4"></el-input>
+                    <el-input size="large" class="input-style" v-model="ipNums[3]"></el-input>
                     <span class="line-style">/</span>
-                    <el-input size="large" class="input-style" v-model="inputObj.input5"></el-input>
-                    <el-button @click="searchData" icon="el-icon-search" class="search-style"></el-button>
+                    <el-input size="large" class="input-style" v-model="ipNums[4]"></el-input>
                     <div class="export-div-style">
                         <el-radio-group v-model="radio2">
-                            <el-radio :label="1">未用</el-radio>
-                            <el-radio :label="2">已用</el-radio>
+                            <el-radio :label="0">未用</el-radio>
+                            <el-radio :label="1">已用</el-radio>
                         </el-radio-group>
-                        <span class="export-style">
-                        <i class="fa fa-2x fa-sign-out"></i>
-                    </span>
+                        <span class="export-style" @click="exportExcel(ipNums, radio2)">
+                            <i class="fa fa-2x fa-sign-out"></i>
+                        </span>
                     </div>
                 </div>
             </div>
             <div :class="legalInput ? ipDetailOpen : ipDetailClose">
-                <p class="ip-info">B类地址</p>
+                <p class="ip-info">{{ipDetailDto.ipType}}</p>
                 <p class="ip-info">&nbsp;</p>
-                <p class="ip-info">网络地址：158.74.56.0</p>
-                <p class="ip-info">可用IP数：254台</p>
-                <p class="ip-info">掩 码：255.255.255.0</p>
-                <p class="ip-info">第一可用：158.74.56.1</p>
-                <p class="ip-info">广播地址：158.74.56.255</p>
-                <p class="ip-info">最后可用：158.74.56.254</p>
-                <p class="ip-info">已用数量：523</p>
-                <p class="ip-info">未用数量：25684</p>
-            </div>
-            <div class="record-button">
-                <el-button>记录网段</el-button>
+                <p class="ip-info">网络地址：{{ipDetailDto.netAddress}}</p>
+                <p class="ip-info">可用IP数：{{ipDetailDto.usableCount}}台</p>
+                <p class="ip-info">掩 码：{{ipDetailDto.maskAddress}}</p>
+                <p class="ip-info">第一可用：{{ipDetailDto.firstUsable}}</p>
+                <p class="ip-info">广播地址：{{ipDetailDto.broadcast}}</p>
+                <p class="ip-info">最后可用：{{ipDetailDto.lastUsable}}</p>
+                <p class="ip-info">已用数量：{{ipDetailDto.usedCount}}</p>
+                <p class="ip-info">未用数量：{{ipDetailDto.unusedCount}}</p>
+                <div class="record-button">
+                    <el-button>记录网段</el-button>
+                </div>
             </div>
         </el-card>
         <div class="ip-table" ref="ipTable">
-            <el-table :data="tableData" @cell-mouse-enter="cellMouseEnter" style="width: 100%" max-height="480">
-                <el-table-column prop="id" label="#"></el-table-column>
-                <el-table-column prop="ipAddr" label="IP地址"></el-table-column>
-                <el-table-column prop="computer" label="计算机名"></el-table-column>
+            <el-table :data="tableData" style="width: 100%" max-height="480">
+                <el-table-column type="index" label="#"></el-table-column>
+                <el-table-column prop="ip" label="IP地址"></el-table-column>
+                <el-table-column prop="name" label="计算机名"></el-table-column>
                 <el-table-column prop="collectTime" label="采集时间" sortable></el-table-column>
                 <el-table-column prop="operate" label="操作">
                     <template slot-scope="scope">
@@ -54,38 +53,52 @@
                 </el-table-column>
             </el-table>
         </div>
-
     </section>
 </template>
 
 <script>
+    import API      from '../remote/api'
+    import TimeUtil from '../utils/timeUtil'
     export default {
         data() {
             return {
-                inputObj: {
-                    input1: '',
-                    input2: '',
-                    input3: '',
-                    input4: '',
-                    input5: '',
-                },
-                radio2: 3,
-                legalInput: true,
+                ipNums: ['','','','',''],
+                radio2: 1, // 0 未用， 1 已用
+                legalInput: false,
                 isload: false,
                 ipDetailOpen: 'ip-detail-open clearfix',
                 ipDetailClose: 'ip-detail-close',
-                tableData: []
+                tableData: [],
+                ipDetailDto: {}
             }
         },
-        created: function () {
-            this.getTableeData(1, 50);
+        mounted(){
+            let params = this.$route.params;
+            if(!(params.ip && params.mask)){
+                this.legalInput = false;
+                return;
+            }
+
+            // 填充IP和掩码
+            let str = params.ip.split(".");
+            str.push(params.mask);
+            this.ipNums = str;
+
+            // 请求IP计算的数据
+            this.calculateIP(this, {ip:params.ip, mask:params.mask});
+        },
+        watch: {
+            ipNums(newVal){
+                console.log("newVal:" + newVal);
+                let result = this.validIpAndMask(newVal, '', '');
+                if(!result.isValid){
+                    this.$notify.error({title:'错误', message: "ip地址或掩码格式错误！"});
+                }else{
+                    this.calculateIP(this, {ip: result.ip, mask: result.mask});
+                }
+            }
         },
         methods: {
-            getTableeData: function (start, end) {
-                for (let i = start; i < end; i++){
-                    this.tableData.push({id: i, ipAddr: '127.0.0.1', computer: 'liwenhao'+'_'+i, collectTime: new Date().toDateString()});
-                }
-            },
             handleEdit(index, row) {
                 console.log(index, row);
             },
@@ -95,13 +108,43 @@
             searchData: function () {
                 console.log("searchData...");
             },
-            cellMouseEnter: function (row) {
-                if(!this.isload && row.id > this.tableData.length-10) {
-                    this.isload = true; // 锁住，防止并发
-                    this.getTableeData(this.tableData.length, this.tableData.length + 50);
-                    console.log('触发懒加载。。。');
+            calculateIP(self, params) {
+                API.calculateIP(params).then(data=>{
+                    console.log(data);
+                    self.ipDetailDto = data.body.ipDetailDto;
+                    self.tableData = data.body.listDto;
+                    self.legalInput = true;
+                }).catch(ex=>{
+                    self.ipDetailDto = {};
+                    self.tableData = [];
+                    self.legalInput = false;
+                    self.$notify.error({title:'错误', message:ex.message});
+                });
+            },
+            validIpAndMask(newVal, ip, mask) {
+                let isValid = newVal && newVal.length === 5;
+                newVal.forEach((value, index)=>{
+                    isValid = isValid && !(value === "" || value === null);
+                    isValid = isValid && !isNaN(value);
+                    if( index === 4 ){
+                        mask = value;
+                    }else{
+                        ip += value + "."
+                    }
+                });
+                ip = ip.substring(0, ip.length - 1);
+                return {isValid:isValid, ip:ip, mask:mask};
+            },
+            exportExcel(ipNums, type) {
+                let result = this.validIpAndMask(ipNums, '', '');
+                if(!result.isValid){
+                    this.$notify.error({title:'错误', message: "ip地址或掩码格式错误！"});
+                }else{
+                    if( this.ipDetailDto.unusedCount > 150000 ){
+                        this.$notify.warning({title:'警告', message: "导出数据超过15w行，只导出前15w行数据！"});
+                    }
+                    API.exportDataByExcel({ip:result.ip, mask:result.mask, type:type});
                 }
-                this.isload = false;
             }
         }
     }
@@ -131,13 +174,6 @@
         min-height: 50px;
         padding: 10px 30% 0;
     }
-    .record-button{
-        margin-top: 10px;
-        margin-left: 30%;
-    }
-    .record-button button{
-        width: 50%;
-    }
     .ip-detail-close {
         display: none;
     }
@@ -149,6 +185,15 @@
         line-height: 35px;
         letter-spacing: 2px;
         font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    }
+    .record-button{
+        display: inline-block;
+        float: left;
+        width: 85%;
+        margin-top: 10px;
+    }
+    .record-button button{
+        width: 100%;
     }
     .input-style {
         width: 65px;
@@ -181,9 +226,10 @@
     }
     .export-div-style {
         display: inline-block;
+        margin-left: 20px;
         padding-left: 20px;
         border-radius: 5px;
-        border: 1px solid #ebeef5;
+        border: 1px solid #dee1e7;
     }
     .export-style {
         display: inline-block;
@@ -192,6 +238,7 @@
         vertical-align:middle;
         position: relative;
         margin-left: 10px;
+        cursor: pointer;
     }
     .export-style i {
         position: absolute;

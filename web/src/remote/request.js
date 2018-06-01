@@ -11,34 +11,47 @@ import { Notification } from 'element-ui';
 axios.defaults.withCredentials  = true;
 
 // 打印请求失败信息
-let printErrorMsg = error => {
+const printErrorMsg = error => {
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.log(error.response.status);
-        console.log(error.response.data);
-        console.log(error.response.headers);
+        console.error(error.response.data);
+        console.error(error.response.status);
+        console.error(error.response.headers);
+        Notification.error({title:'错误', message:'系统发生无法想象的错误'});
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        console.log(error.request);
+        console.error(error.request);
+        Notification.error({title:'错误', message:'请求失败'});
     } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
+        console.error('Error', error.message);
     }
-    console.log(error.config);
-    Notification.error({title:'错误', message:'系统发生无法想象的错误'});
+    console.error(error.config);
     bus.$emit('isShowLoad', false); // 结束加载动画
 };
 
 // 打印请求异常结果信息
-let printTipsMsg = data => {
+const printTipsMsg = data => {
     if( data.code === 1 ) {
-        Notification.error({title:'错误', message:data.body.msg});
+        return Promise.reject(new Error(data.body.msg));
     }
     return data;
 };
+
+// 弹出下载
+const downloadUrl = url => {
+    let iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = url;
+    iframe.onload = () => {
+        document.body.removeChild(iframe);
+    };
+    document.body.appendChild(iframe);
+};
+
 
 // 请求拦截
 axios.interceptors.request.use(function (conf) {
@@ -51,7 +64,10 @@ axios.interceptors.request.use(function (conf) {
 
 // 响应拦截
 axios.interceptors.response.use(function (res) {
-    bus.$emit('isShowLoad', false); // 结束加载动画
+    bus.$emit('isShowLoad', false); // 结束加载动画, 事件总线
+    if (res.headers && res.headers['content-type'] === 'application/octet-stream') {
+        downloadUrl(res.request.responseURL);
+    }
     return res;
 }, function (error) {
     printErrorMsg(error);

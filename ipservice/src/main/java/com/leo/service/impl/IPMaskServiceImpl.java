@@ -109,6 +109,8 @@ public class IPMaskServiceImpl implements IIPMaskService {
             return CommandResult.errorResult("请输入合法的掩码位");
         }
         IPDetail ipDetail = new IPDetail(ip, mask).invoke();
+        boolean isRecord = maskManager.get( ipDetail.getIpDetailDto().getNetAddress() ) != null;
+        ipDetail.setIsRecord(isRecord ? 1 : 0);
         return CommandResult.succResult(ipDetail);
     }
 
@@ -123,7 +125,8 @@ public class IPMaskServiceImpl implements IIPMaskService {
         }
         try{
             lock.lock();
-            if( maskManager.get( model.getNetAddress() ) != null ){
+            IPDetail ipDetail = new IPDetail(model.getNetAddress(), model.getMaskAddress()).invoke();
+            if( maskManager.get( ipDetail.getIpDetailDto().getNetAddress() ) != null ){
                 return CommandResult.errorResult("该网段已被记录");
             }
             model.setRecordTime(new Date());
