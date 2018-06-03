@@ -66,6 +66,6 @@ public class IPMaskController {
     @RequestMapping( value = "/mask/delete", method = RequestMethod.DELETE )
     @ResponseBody
     public CommandResult deleteMask(@RequestBody Map<String, String> body){
-        return ipMaskService.deleteMask(body.get("mask"));
+        return ipMaskService.deleteMask(body.get("ip"));
     }
 }

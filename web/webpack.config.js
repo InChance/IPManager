@@ -21,6 +21,12 @@ let plugins = [
     new ExtractTextPlugin({filename: 'css/[name].[hash:5].css', allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
     new webpack.optimize.ModuleConcatenationPlugin(), // 减少闭包函数数量,将一些有联系的模块，放到一个闭包函数
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        jquery: "jquery",
+        "window.jQuery": "jquery"
+    }),
     new HtmlWebpackPlugin({
         filename: 'index.html',
         template: './index.html',

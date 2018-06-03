@@ -1,19 +1,21 @@
 <template>
     <section id="head">
-        <div class="right-head">
-            <div class="list-switch-icon">
-                <i class="fa fa-2x fa-outdent switch-icon"></i>
+        <div class="fixed-head">
+            <div class="right-head">
+                <div class="list-switch-icon">
+                    <i class="fa fa-2x fa-outdent switch-icon"></i>
+                </div>
+                <div class="help-word">
+                    <p>帮助文档</p>
+                </div>
+                <div class="account-info">
+                    <p class="account-info-pointer">小明 <i class="el-icon-caret-bottom"></i></p>
+                </div>
             </div>
-            <div class="help-word">
-                <p>帮助文档</p>
+            <hr class="right-head-hr"/>
+            <div class="breadcrumb">
+                <span>{{curAddress}}</span>
             </div>
-            <div class="account-info">
-                <p class="account-info-pointer">小明 <i class="el-icon-caret-bottom"></i></p>
-            </div>
-        </div>
-        <hr class="right-head-hr"/>
-        <div class="breadcrumb">
-            <span>{{curAddress}}</span>
         </div>
     </section>
 </template>
@@ -27,8 +29,15 @@
 </script>
 
 <style scoped>
-    #head {
-
+    .fixed-head {
+        position: fixed;
+        z-index: 999;
+        width: 90%;
+        width: -moz-calc(100% - 210px);
+        width: -webkit-calc(100% - 210px);
+        width: calc(100% - 210px);
+        height: 101px;
+        background-color: white;
     }
     .list-switch-icon {
         display: inline-block;
@@ -36,7 +45,6 @@
         width: 80px;
         height: 100%;
         text-align: center;
-        float: none;
         color: #313131;
         border-right: 1px solid rgba(69, 79, 58, 0.24);
     }
@@ -61,7 +69,8 @@
         border-right: 1px solid rgba(69, 79, 58, 0.24);
     }
     .help-word p {
-        position: relative;
+        position: absolute;
+        width: 100%;
         top: 50%;
         transform: translateY(-50%);
     }
@@ -75,7 +84,8 @@
         text-align: center;
     }
     .account-info p {
-        position: relative;
+        position: absolute;
+        width: 100%;
         top: 50%;
         transform: translateY(-50%);
     }
@@ -99,7 +109,7 @@
     }
     .breadcrumb span {
         display: inline-block;
-        position: absolute;
+        position: relative;
         font-size: 14px;
         color: #0088cc;
         top: 50%;

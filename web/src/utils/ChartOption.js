@@ -8,33 +8,19 @@
                 trigger: 'item',
                 formatter: "{b} : {c} ({d}%)"
             },
-            visualMap: {
-                show: false,
-                min: 80,
-                max: 600,
-                inRange: {
-                    colorLightness: [0, 1]
-                }
-            },
             series : [
                 {
-                    name:'',
-                    type:'pie',
+                    name: '',
+                    type: 'pie',
                     radius : '55%',
                     center: ['50%', '50%'],
-                    data:array.sort(function (b, a) { return a.value - b.value; }),
-                    roseType: 'radius',
-                    itemStyle: {
-                        normal: {
-                            color: '#d74352',
-                            shadowBlur: 200,
-                            shadowColor: 'rgba(0, 0, 0, 0.3)'
-                        }
-                    },
-                    animationType: 'scale',
-                    animationEasing: 'elasticOut'
+                    data:[
+                        {value: data.usedNum, name:'已使用'},
+                        {value: data.unusedNum, name:'未使用'},
+                    ]
                 }
-            ]
-        }
+            ],
+            color: ['rgba(226, 101, 101, 0.6)','rgba(190, 40, 40, 0.9)']
+        };
     }
  }

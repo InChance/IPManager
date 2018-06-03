@@ -79,7 +79,7 @@ public class ExcelModel {
      */
     public static <T> HSSFWorkbook getByList(List<T> list) throws IllegalAccessException {
         try {
-            // 创建Excel文档
+            // 创建Excel文档, 每5w行一页sheet
             HSSFWorkbook hwb = new HSSFWorkbook();
             for(int k = 0; k < list.size(); k=k+50000 ){
                 HSSFSheet sheet = hwb.createSheet();
@@ -94,7 +94,7 @@ public class ExcelModel {
                             xh.setCellValue(t.toString());
                             break;
                         }
-                        Field f = fields[j];
+                        Field f = fields[h];
                         f.setAccessible(true);
                         if ( f.getType() == Date.class) {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

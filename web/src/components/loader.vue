@@ -29,6 +29,7 @@
 <style>
     .loader {
         position: absolute;
+        z-index:999999;
         top: 50%;
         left: 40%;
         margin-left: 10%;

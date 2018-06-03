@@ -6,10 +6,12 @@
         </el-aside>
         <el-main>
             <head-content :curAddress="curAddress"></head-content>
-            <!--每页的局部页面跳转-->
-            <transition name="fade" mode="out-in">
-                <router-view class="view"></router-view>
-            </transition>
+            <div class="router-content">
+                <!--每页的局部页面跳转-->
+                <transition name="fade" mode="out-in">
+                    <router-view class="view"></router-view>
+                </transition>
+            </div>
         </el-main>
     </el-container>
 </template>
@@ -54,5 +56,9 @@
         margin: 0;
         padding: 0;
         height: 100%;
+    }
+    .router-content{
+        width: auto;
+        padding-top: 102px;
     }
 </style>

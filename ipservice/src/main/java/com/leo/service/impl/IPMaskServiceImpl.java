@@ -73,6 +73,7 @@ public class IPMaskServiceImpl implements IIPMaskService {
             if( m == null ){
                 return CommandResult.errorResult("当前ip不存在！");
             }
+            model.setCollectTime(m.getCollectTime());
             ipManager.update(model);
             return CommandResult.succResult("更新成功");
         }finally {
@@ -117,7 +118,7 @@ public class IPMaskServiceImpl implements IIPMaskService {
     /** 保存搜索的网段信息 */
     @Override
     public CommandResult saveIPMask(MaskModel model){
-         if(!IPMaskUtil.isValidIP(model.getNetAddress())){
+         if( !IPMaskUtil.isValidIP(model.getNetAddress()) ){
             return CommandResult.errorResult("请输入合法的网段");
         }
         if(!IPMaskUtil.isValidMask(model.getMaskAddress())){
@@ -155,18 +156,18 @@ public class IPMaskServiceImpl implements IIPMaskService {
         return CommandResult.succResult(listDto);
     }
 
-    /** 删除子网掩码 */
+    /** 删除网段IP */
     @Override
-    public CommandResult deleteMask(String mask){
-        if (!IPMaskUtil.isValidMask(mask)){
-            return CommandResult.errorResult("非法的子网掩码");
+    public CommandResult deleteMask(String ip){
+        if (!IPMaskUtil.isValidIP(ip)){
+            return CommandResult.errorResult("非法的网段IP");
         }
         try{
             lock.lock();
-            if( maskManager.get( mask ) == null ){
+            if( maskManager.get( ip ) == null ){
                 return CommandResult.errorResult("该网段未被记录");
             }
-            maskManager.delete(mask);
+            maskManager.delete(ip);
             return CommandResult.succResult();
         }finally {
             lock.unlock();

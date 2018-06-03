@@ -35,20 +35,20 @@
                 <p class="ip-info">已用数量：{{ipDetailDto.usedCount}}</p>
                 <p class="ip-info">未用数量：{{ipDetailDto.unusedCount}}</p>
                 <div class="record-button">
-                    <el-button>记录网段</el-button>
+                    <el-button :disabled="record_disabled" @click="addMask">{{record_value}}</el-button>
                 </div>
             </div>
         </el-card>
         <div class="ip-table" ref="ipTable">
-            <el-table :data="tableData" style="width: 100%" max-height="480">
+            <el-table :data="tableData" style="width: 100%" max-height="425">
                 <el-table-column type="index" label="#"></el-table-column>
                 <el-table-column prop="ip" label="IP地址"></el-table-column>
                 <el-table-column prop="name" label="计算机名"></el-table-column>
                 <el-table-column prop="collectTime" label="采集时间" sortable></el-table-column>
                 <el-table-column prop="operate" label="操作">
                     <template slot-scope="scope">
-                        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -69,7 +69,10 @@
                 ipDetailOpen: 'ip-detail-open clearfix',
                 ipDetailClose: 'ip-detail-close',
                 tableData: [],
-                ipDetailDto: {}
+                ipDetailDto: {},
+                isRecord: 0,
+                record_disabled: false,
+                record_value: '记录网段'
             }
         },
         mounted(){
@@ -78,18 +81,13 @@
                 this.legalInput = false;
                 return;
             }
-
             // 填充IP和掩码
             let str = params.ip.split(".");
             str.push(params.mask);
             this.ipNums = str;
-
-            // 请求IP计算的数据
-            this.calculateIP(this, {ip:params.ip, mask:params.mask});
         },
         watch: {
             ipNums(newVal){
-                console.log("newVal:" + newVal);
                 let result = this.validIpAndMask(newVal, '', '');
                 if(!result.isValid){
                     this.$notify.error({title:'错误', message: "ip地址或掩码格式错误！"});
@@ -99,25 +97,64 @@
             }
         },
         methods: {
-            handleEdit(index, row) {
-                console.log(index, row);
+            handleEdit(row) {
+                this.$prompt('请输入计算机名', '更新', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消'
+                }).then(({ value }) => {
+                    if(!(value && jQuery.trim(value).length > 0 && value.length < 20)){
+                        this.$notify.error({title: '错误', message: '计算机名称不可为空或过长！'});
+                        return;
+                    }
+                    API.updateIpInfo({ip: row.ip, name: value}).then(data=>{
+                        this.$notify.success({title:'信息', message: "更新成功！"});
+                        let result = this.validIpAndMask(this.ipNums, '', '');
+                        this.calculateIP(this, {ip: result.ip, mask: result.mask});
+                    }).catch(ex=>{
+                        self.$notify.error({title:'错误', message:ex.message});
+                    });
+                }).catch(()=>{
+                    console.log('取消更新操作!');
+                });
             },
-            handleDelete(index, row) {
-                console.log(index, row);
-            },
-            searchData: function () {
-                console.log("searchData...");
+            handleDelete(row) {
+                this.$confirm('此操作将永久删除该IP, 是否继续?', '删除', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    API.deleteIPRecord({ip: row.ip}).then(data=>{
+                        this.$notify.success({title:'信息', message: "删除成功！"});
+                        let result = this.validIpAndMask(this.ipNums, '', '');
+                        this.calculateIP(this, {ip: result.ip, mask: result.mask});
+                    }).catch(ex=>{
+                        self.$notify.error({title:'错误', message:ex.message});
+                    });
+                }).catch(()=>{
+                    //console.log("取消删除操作!");
+                });
+
             },
             calculateIP(self, params) {
                 API.calculateIP(params).then(data=>{
-                    console.log(data);
                     self.ipDetailDto = data.body.ipDetailDto;
                     self.tableData = data.body.listDto;
                     self.legalInput = true;
+                    self.isRecord = data.body.isRecord;
+                    if(self.isRecord === 1){
+                        self.record_disabled = true;
+                        self.record_value = '网段已记录';
+                    }else{
+                        self.record_disabled = false;
+                        self.record_value = '记录网段';
+                    }
                 }).catch(ex=>{
                     self.ipDetailDto = {};
                     self.tableData = [];
                     self.legalInput = false;
+                    self.isRecord = 0;
+                    self.record_disabled = false;
+                    self.record_value = '记录网段';
                     self.$notify.error({title:'错误', message:ex.message});
                 });
             },
@@ -145,6 +182,25 @@
                     }
                     API.exportDataByExcel({ip:result.ip, mask:result.mask, type:type});
                 }
+            },
+            addMask(){
+                if( this.record_disabled ){
+                    return;
+                }
+                if(this.ipDetailDto.usableCount && this.ipDetailDto.usableCount > 10000){
+                    this.$notify.error({title: '错误', message: '网段范围过大，无记录意义！'});
+                    return;
+                }
+                let ip   = this.ipDetailDto.netAddress;
+                let mask = this.ipDetailDto.maskAddress;
+                if(!(ip && mask)){
+                    return;
+                }
+                API.saveIPMask({netAddress: ip, maskAddress: mask}).then(data=>{
+                    this.$notify.success({title: '信息', message: '记录成功'});
+                }).catch(ex=>{
+                    this.$notify.error({title: '错误', message: ex.message});
+                });
             }
         }
     }

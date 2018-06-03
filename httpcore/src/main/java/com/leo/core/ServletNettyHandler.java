@@ -11,20 +11,23 @@ import io.netty.handler.codec.http.multipart.*;
 import io.netty.handler.stream.ChunkedStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.Servlet;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
@@ -51,13 +54,7 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
             MockHttpServletResponse servletResponse = new MockHttpServletResponse();
 
             // 调用service执行业务逻辑
-            String contentType = servletRequest.getContentType();
-            if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
-                MultipartHttpServletRequest multipartRequest = WebUtils.getNativeRequest(servletRequest, MultipartHttpServletRequest.class);
-                this.servlet.service(multipartRequest, servletResponse);
-            } else {
-                this.servlet.service(servletRequest, servletResponse);
-            }
+            this.servlet.service(servletRequest, servletResponse);
 
             // 响应数据
             HttpResponseStatus status = HttpResponseStatus.valueOf(servletResponse.getStatus());
@@ -74,6 +71,13 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
                         + ", error: " + servletResponse.getErrorMessage()).getBytes(charset);
             }
             writeAndFlush(ctx, response, responseContent);
+
+            // 打印日志
+            if( MediaType.APPLICATION_OCTET_STREAM_VALUE.equals( servletResponse.getHeader("Content-Type") ) ){
+                log.debug("response content: " + "正在下载文件...");
+            }else{
+                log.debug("response content: " + new String(responseContent, charset));
+            }
         } catch (Exception e) {
             exceptionCaught(ctx, e.getCause());
         }
@@ -188,12 +192,13 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
      * @param ctx
      * @param status
      */
-    private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
+    private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) throws UnsupportedEncodingException {
         HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
         response.headers().add(io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE, "text/plain; charset=UTF-8");
         int code = response.status().code();
         byte[] responseContent = (code + " " + response.status().reasonPhrase()).getBytes();
         writeAndFlush(ctx, response, responseContent);
+        log.debug("response content: " + new String(responseContent, charset));
     }
 
     private void writeAndFlush(ChannelHandlerContext ctx, HttpResponse response, byte[] content){
@@ -201,7 +206,6 @@ public class ServletNettyHandler extends SimpleChannelInboundHandler<FullHttpReq
         InputStream inputStream = new ByteArrayInputStream(content);
         ChannelFuture channelFuture = ctx.writeAndFlush(new ChunkedStream(inputStream));
         channelFuture.addListener(ChannelFutureListener.CLOSE);
-        log.debug("response content: " + Arrays.toString(content));
     }
 
 }

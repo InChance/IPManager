@@ -7,6 +7,7 @@
                     <span :id="'chart'+(index+1)" class="ip-chart"></span>
                 </router-link>
                 <span class="ip-used"><span class="ip-used-num">{{ch.unusedNum}}</span> <br> 网段剩余可用IP数量 </span>
+                <span class="icon-delete" @click="deleteMask(ch.netIp)"><i class="el-icon-delete"></i></span>
             </li>
         </ul>
     </section>
@@ -16,7 +17,6 @@
     import echarts from 'echarts';
     import API     from '../remote/api';
     import ChartOption  from '../utils/ChartOption';
-
     export default {
         data() {
             return {
@@ -33,8 +33,6 @@
             reloadChartData(){
                 let self = this;
                 API.getIPMaskChartInfo().then(data => {
-                    console.log("图表请求数据：");
-                    console.log(data);
                     self.chart_list = data.body;
                 }).catch(ex=>{
                     self.chart_list = [];
@@ -49,6 +47,22 @@
                     let option = ChartOption.getOption(chart_list[k]);
                     myChart.setOption(option);
                 }
+            },
+            deleteMask(ip){
+                let self = this;
+                let params = {ip: ip};
+                this.$confirm('确定删除该网段IP？', '删除', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    API.deleteMask(params).then(data => {
+                        this.reloadChartData();
+                        self.$notify.success({title: '错误', message: '删除成功！'});
+                    }).catch(ex => {
+                        self.$notify.error({title: '错误', message: ex.message});
+                    });
+                }).catch(ex=>{});
             },
         }
     }
@@ -98,5 +112,16 @@
     .ip-used-num {
         font-size: 100px;
         line-height: 100px;
+    }
+    .icon-delete {
+        display: inline-block;
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: 0;
+        right: 0;
+        font-size: 32px;
+        cursor: pointer;
+        background-color: #f1eaff;
     }
 </style>

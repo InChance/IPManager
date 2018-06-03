@@ -15,13 +15,14 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">提 交</el-button>
+                <el-button type="primary" @click="submitFormData">提 交</el-button>
             </div>
         </el-dialog>
     </section>
 </template>
 
 <script>
+    import API from '../remote/api'
     export default {
         data() {
           return {
@@ -33,7 +34,35 @@
           }
         },
         methods: {
-
+            submitFormData(){
+                let ip   = this.form.ipAddress;
+                let name = this.form.computerName;
+                let isValid = ip && ip.split('.').length === 4;
+                ip.split('.').forEach((value)=>{
+                    isValid = isValid && !(value === "" || value === null);
+                    isValid = isValid && !isNaN(value);
+                });
+                if(!isValid){
+                    this.$notify.error({title: '错误', message: 'IP格式错误！'});
+                    this.form.ipAddress = '';
+                    return;
+                }
+                if(!(name && jQuery.trim(name).length > 0 && name.length < 20)){
+                    this.$notify.error({title: '错误', message: '计算机名称不可为空或过长！'});
+                    this.form.computerName = '';
+                    return;
+                }
+                let params = {ip: ip, name: name};
+                let self = this;
+                API.addNewIPAddress(params).then(data=>{
+                    self.dialogFormVisible = false;
+                    this.$notify.success({title: '信息', message: 'IP地址添加成功'});
+                }).catch(ex=>{
+                    this.form.ipAddress = '';
+                    this.form.computerName = '';
+                    this.$notify.error({title: '错误', message: ex.message});
+                });
+            }
         }
     }
 </script>
