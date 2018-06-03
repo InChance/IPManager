@@ -2,7 +2,132 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59418014-dd67-49e1-90a2-63e338e6297a" name="Default" comment="initial commit">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/ip.xls" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/ip.xlsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/assets/fonts/element-icons.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/assets/fonts/element-icons.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/assets/img/add.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/assets/img/excel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/assets/img/logo.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/controller/ExcelImportController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/controller/IPMaskController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/dao/IPDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/dao/MaskDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/manager/IIPManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/manager/IMaskManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/manager/impl/IMaskManagerImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/manager/impl/IPManagerImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/ExcelModel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/IPDetail.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/IPDetailDto.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/IPModel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/MaskModel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/service/IIPMaskService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/service/impl/ContextService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/service/impl/IPMaskServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/utils/CommandResult.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/utils/IPMaskUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/utils/typeHandler/DateTypeHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/src/main/resources/mybatis.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/src/main/test/utils/IPMask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/bus.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/NetChart.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/layout/Aside.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/layout/Head.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/components/loader.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/remote/api.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/remote/request.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/utils/ChartOption.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/utils/timeUtil.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/views/Document.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/views/Home.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/views/IPMaskChart.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/views/IPMaskCollect.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/views/IPMaskSearch.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/资源/IPManager.sql" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_druid_1_1_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_1_41.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_3_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_3_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_3_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_all_4_1_18_Final.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_javax_servlet_api_3_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_29.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_ehcache_ehcache_2_10_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aeonbits_owner_owner_1_0_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_4_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_16_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_21.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_oxm_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_1_4_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/IPManager.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/controller/TestController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/dao/StudentDao.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/Student.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/service/IStudentService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ipservice/src/main/java/com/leo/service/impl/StudentServiceImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/server/src/main/resources/mybatis-config.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/login.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/package-lock.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/src/components/Nav.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/src/login/Login.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/src/login/login.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/src/login/loginR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/src/views/about.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/src/views/home.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/web/web.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/httpcore/httpcore.iml" afterPath="$PROJECT_DIR$/httpcore/httpcore.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/DispatcherServletImpl.java" afterPath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/DispatcherServletImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServerBoot.java" afterPath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServerBoot.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServerConfig.java" afterPath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServerConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServletNettyHandler.java" afterPath="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServletNettyHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ipservice/ipservice.iml" afterPath="$PROJECT_DIR$/ipservice/ipservice.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ipservice/pom.xml" afterPath="$PROJECT_DIR$/ipservice/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/server.iml" afterPath="$PROJECT_DIR$/server/server.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/main/java/com/leo/ServerStart.java" afterPath="$PROJECT_DIR$/server/src/main/java/com/leo/ServerStart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/main/resources/server.xml" afterPath="$PROJECT_DIR$/server/src/main/resources/server.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/main/resources/spring-mybatis.xml" afterPath="$PROJECT_DIR$/server/src/main/resources/spring-mybatis.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/main/test/controller/TestCase.java" afterPath="$PROJECT_DIR$/server/src/main/test/controller/TestCase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/main/test/dao/Annotations_Example.java" afterPath="$PROJECT_DIR$/server/src/main/test/dao/Annotations_Example.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/target/classes/server.xml" afterPath="$PROJECT_DIR$/server/target/classes/server.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/.babelrc" afterPath="$PROJECT_DIR$/web/.babelrc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/index.html" afterPath="$PROJECT_DIR$/web/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/package.json" afterPath="$PROJECT_DIR$/web/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/App.vue" afterPath="$PROJECT_DIR$/web/src/App.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/assets/common.scss" afterPath="$PROJECT_DIR$/web/src/assets/common.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main.js" afterPath="$PROJECT_DIR$/web/src/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/routes.js" afterPath="$PROJECT_DIR$/web/src/routes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/webpack.config.js" afterPath="$PROJECT_DIR$/web/webpack.config.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/server/src/main/resources/applicationContext.xml" afterPath="$PROJECT_DIR$/server/src/main/resources/spring-context.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/server/src/main/resources/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/server/src/main/resources/spring-mvc.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -37,41 +162,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="1.jpg" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/资源/1.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/资源/2.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="3.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/资源/3.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xuqiu.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/资源/xuqiu.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/src/views/home.vue">
+      <file leaf-file-name="Home.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/src/views/Home.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1588">
-              <caret line="97" column="20" lean-forward="false" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="20" />
+            <state relative-caret-position="-515">
+              <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
               <folding>
-                <marker date="1528027145290" expanded="true" signature="4588:4603" ph="..." />
+                <element signature="e#569#619#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -119,7 +216,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/leo/ServerStart.java" />
         <option value="$PROJECT_DIR$/httpcore/src/main/java/com/leo/core/ServletNettyHandler.java" />
         <option value="$PROJECT_DIR$/server/pom.xml" />
         <option value="$PROJECT_DIR$/ipservice/src/main/java/com/leo/utils/Annotations_Example.java" />
@@ -170,6 +266,7 @@
         <option value="$PROJECT_DIR$/web/src/main.js" />
         <option value="$PROJECT_DIR$/web/src/assets/reset.css" />
         <option value="$PROJECT_DIR$/web/src/views/home.vue" />
+        <option value="$PROJECT_DIR$/web/src/views/Home.vue" />
       </list>
     </option>
   </component>
@@ -213,7 +310,7 @@
     <option name="jreName" value="1.8" />
     <option name="vmOptions" value="-DarchetypeCatalog=internal" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -951,7 +1048,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137231000" />
+    <option name="totallyTimeSpent" value="137918000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -963,8 +1060,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298791" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -976,8 +1072,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42231947" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53501093" sideWeight="0.4946695" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.96608317" sideWeight="0.4946695" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22489317" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1016,7 +1111,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959402" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42316258" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298791" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3402626" sideWeight="0.4946695" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18215811" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32713348" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1094,28 +1189,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="170" column="16" lean-forward="true" selection-start-line="170" selection-start-column="16" selection-end-line="170" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/main/java/com/leo/ServerStart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ipservice/src/main/java/com/leo/model/Student.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main/test/utils/IPUtils2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -1320,6 +1393,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="6" column="24" lean-forward="false" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1370,19 +1444,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/views/home.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1588">
-          <caret line="97" column="20" lean-forward="false" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="20" />
-          <folding>
-            <marker date="1528027145290" expanded="true" signature="4588:4603" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/资源/1.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/资源/2.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/资源/3.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/资源/xuqiu.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/Home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-515">
+          <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+          <folding>
+            <element signature="e#569#619#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

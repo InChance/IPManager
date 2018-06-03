@@ -1,7 +1,7 @@
 package dao;
 
-import com.leo.dao.StudentDao;
-import com.leo.model.Student;
+import com.leo.dao.IPDao;
+import com.leo.model.IPModel;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,13 +12,13 @@ import java.io.Reader;
 
 public class Annotations_Example {
     public static void main(String args[]) throws IOException {
-        Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+        Reader reader = Resources.getResourceAsReader("spring-mybatis.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession session = sqlSessionFactory.openSession();
-        session.getConfiguration().addMapper(StudentDao.class);
+        session.getConfiguration().addMapper(IPDao.class);
 
-        StudentDao dao = session.getMapper(StudentDao.class);
-        Student student = dao.get(1);
+        IPDao dao = session.getMapper(IPDao.class);
+        IPModel student = dao.getByIp("127.0.0.1");
         System.out.println(student.toString());
 
         session.commit();

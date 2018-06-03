@@ -1,5 +1,15 @@
-web/node_modules/
-.idea/inspectionProfiles/profiles_settings.xml
-.idea/
+### Example user template
+
+# IntelliJ project files
+.idea
 *.iml
+out
+gen
+
+web/node_modules/
 web/dist/
+httpcore/target/
+ipservice/target/
+server/target/
+.idea/watcherTasks.xml
+web/package-lock.json
